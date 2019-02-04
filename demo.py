@@ -7,7 +7,7 @@ app = Flask(__name__)
 def display_users():
     output = []
     config = {
-            "apiKey": "[redacted]",
+            "apiKey": "AIzaSyA2e2s8fVJ60scbvPgZTINKBSx4Ki1m8D4",
             "authDomain": "bucket-list-swe.firebaseapp.com",
             "databaseURL": "https://bucket-list-swe.firebaseio.com",
             "storageBucket": "bucket-list-swe.appspot.com"

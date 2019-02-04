@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "296389021106",
+    "firebase_url": "https://bucket-list-swe.firebaseio.com",
+    "project_id": "bucket-list-swe",
+    "storage_bucket": "bucket-list-swe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296389021106:android:7d7faecd859da041",
+        "android_client_info": {
+          "package_name": "com.cs4279.buckit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296389021106-du9vcqi3jv17intdmacd3dape3g26ign.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs4279.buckit",
+            "certificate_hash": "1f72ab61fceb1e49085a3b4bfc943910e00d259f"
+          }
+        },
+        {
+          "client_id": "296389021106-uhefgkg9rbqc8sv4h2q509rqb3mcd07r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjC-e7pyUdF1PDpMSNUJt5W70yjiTE1WY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296389021106-uhefgkg9rbqc8sv4h2q509rqb3mcd07r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
