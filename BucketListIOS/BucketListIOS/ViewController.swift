@@ -11,14 +11,25 @@ import FirebaseAuth
 
 class ViewController: UIViewController {
 
-    
+    @IBOutlet weak var segmentOption: UISegmentedControl!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var button: UIButton!
+    @IBAction func buttonClicked(_ sender: Any) {
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    func login(){
+        
+    }
     
+    func signup(){
+        
+    }
 
 
 }
