@@ -3,6 +3,7 @@ package com.cs4279.buckit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +15,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button deleteAccountButton,logoutButton;
+    FloatingActionButton addItemFAB;
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener  authStateListener;
 
@@ -27,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
 
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.textView1);
-        deleteAccountButton =(Button) findViewById(R.id.deleteAccountButton);
-        logoutButton =(Button) findViewById(R.id.logoutButton);
+        textView = findViewById(R.id.textView1);
+        deleteAccountButton = findViewById(R.id.deleteAccountButton);
+        logoutButton = findViewById(R.id.logoutButton);
+        addItemFAB = findViewById(R.id.addItemFAB);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -74,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        addItemFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),AddItemActivity.class));
+                // do NOT finish();
+            }
+        });
+
 
 
     }

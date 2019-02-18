@@ -29,7 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    EditText loginEmail,loginPassword;
+    TextInputEditText loginEmail,loginPassword;
     Button loginButton,registerButton,forgotPasswordButton;
     private static final int RC_SIGN_IN = 9001;
     private SignInButton signInButton;
