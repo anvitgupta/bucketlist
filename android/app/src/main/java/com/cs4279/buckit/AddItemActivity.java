@@ -31,6 +31,8 @@ public class AddItemActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+
+        // TODO: No need for Metadata on lenght of list, switch to push() method instead.
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -48,7 +50,10 @@ public class AddItemActivity extends AppCompatActivity {
             }
         };
         mDatabase.addValueEventListener(postListener);
+        // From the TO-DO to here is probably not needed anymore
 
+
+        final DatabaseReference newItemsReference = mDatabase.child("bucket_list_items");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +68,9 @@ public class AddItemActivity extends AppCompatActivity {
                 ++count;
                 mDatabase.child("demo").child("" + count).setValue(newItemStr);
                 mDatabase.child("demo_count").setValue("" + count);
+
+                Item newItem = new Item(newItemStr, newItemStr);
+                newItemsReference.push().setValue(newItem);
 
                 finish();
             }
