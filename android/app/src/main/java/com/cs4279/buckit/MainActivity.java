@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -26,14 +28,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button deleteAccountButton,logoutButton;
     FloatingActionButton addItemFAB;
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener  authStateListener;
-    private LinearLayout cardsLayout;
-    private DatabaseReference mDatabase;
+    private RecyclerView cardsLayout;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private FirebaseDatabase mDatabase;
+    private ArrayList<Item> itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         addItemFAB = findViewById(R.id.addItemFAB);
 
         cardsLayout = findViewById(R.id.cardsList);
+        itemsList = new ArrayList<Item>();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -100,22 +108,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference newItemsReference = mDatabase.child("bucket_list_items");
+        mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference initialItemsReference = mDatabase.getReference("bucket_list_items");
 
-        ValueEventListener newItemListener = new ValueEventListener() {
+        ValueEventListener initialItemsListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Metadata object and use the values to update the UI
-                Item newItem = dataSnapshot.getValue(Item.class);
+                itemsList.clear();
+                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                    Item newItem = itemSnapshot.getValue(Item.class);
+                    itemsList.add(newItem);
+                }
 
+                mAdapter.notifyDataSetChanged();
+                /*
                 CardView card = new CardView(getApplicationContext());
 
                 // Set the CardView layoutParams
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
+                int margin = 10;
+                params.setMargins(margin, margin, margin, margin);
+                params.weight = 1;
                 card.setLayoutParams(params);
 
                 // Set CardView corner radius
@@ -136,13 +152,16 @@ public class MainActivity extends AppCompatActivity {
                 // Initialize a new TextView to put in CardView
                 TextView tv = new TextView(getApplicationContext());
                 tv.setLayoutParams(params);
-                tv.setText(newItem.getDescription());
+                tv.setText("Hi Abby :)");//newItem.getDescription());
+                // Need to setId()?
+                tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
                 // Put the TextView in CardView
                 card.addView(tv);
 
                 cardsLayout.addView(card);
+                */
             }
 
             @Override
@@ -153,7 +172,31 @@ public class MainActivity extends AppCompatActivity {
                 // ...
             }
         };
-        newItemsReference.addValueEventListener(newItemListener);
+        initialItemsReference.addValueEventListener(initialItemsListener); // Use this for now, perhaps switch to child event listener later?
+        //initialItemsReference.addListenerForSingleValueEvent(initialItemsListener);
+
+        /*DatabaseReference newItemsReference = mDatabase.getReference().child("bucket_list_items");
+        ValueEventListener newItemListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Item newItem = dataSnapshot.getValue(Item.class);
+                itemsList.add(newItem);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // TODO
+                // Getting Metadata failed, log a message
+                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        newItemsReference.addValueEventListener(newItemListener);*/
+
+        mAdapter = new ItemsAdapter(itemsList);
+        cardsLayout.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(this);
+        cardsLayout.setLayoutManager(mLayoutManager);
 
     }
 

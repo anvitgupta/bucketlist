@@ -69,7 +69,7 @@ public class AddItemActivity extends AppCompatActivity {
                 mDatabase.child("demo").child("" + count).setValue(newItemStr);
                 mDatabase.child("demo_count").setValue("" + count);
 
-                Item newItem = new Item(newItemStr, newItemStr);
+                Item newItem = new Item(newItemStr, newItemStr, "Admin", "03-13-19", 1.0);
                 newItemsReference.push().setValue(newItem);
 
                 finish();
