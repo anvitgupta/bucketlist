@@ -29,10 +29,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
     TextView textView;
-    Button deleteAccountButton,logoutButton;
+    Button deleteAccountButton,logoutButton,publicButton;
     FloatingActionButton addItemFAB;
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener  authStateListener;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private FirebaseDatabase mDatabase;
     private ArrayList<Item> itemsList;
+    private HashSet<String> personalItemIDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,12 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView1);
         deleteAccountButton = findViewById(R.id.deleteAccountButton);
         logoutButton = findViewById(R.id.logoutButton);
+        publicButton = findViewById(R.id.publicButton);
         addItemFAB = findViewById(R.id.addItemFAB);
 
         cardsLayout = findViewById(R.id.cardsList);
         itemsList = new ArrayList<Item>();
+        personalItemIDs = new HashSet<String>();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -100,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        publicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PublicFeedActivity.class));
+            }
+        });
+
         addItemFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,89 +120,51 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference initialItemsReference = mDatabase.getReference("bucket_list_items");
 
-        ValueEventListener initialItemsListener = new ValueEventListener() {
+        DatabaseReference personalListReference = mDatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).child("personal_list");
+
+        ValueEventListener personalListListener = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                itemsList.clear();
-                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
-                    Item newItem = itemSnapshot.getValue(Item.class);
-                    itemsList.add(newItem);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                personalItemIDs.clear();
+                for (DataSnapshot itemIDSnapshot : dataSnapshot.getChildren()) {
+                    String itemID = itemIDSnapshot.getValue(String.class);
+                    personalItemIDs.add(itemID);
                 }
 
-                mAdapter.notifyDataSetChanged();
-                /*
-                CardView card = new CardView(getApplicationContext());
+                // After updating personal bucket list IDs, fetch the appropriate posts
+                DatabaseReference initialItemsReference = mDatabase.getReference("bucket_list_items");
 
-                // Set the CardView layoutParams
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                int margin = 10;
-                params.setMargins(margin, margin, margin, margin);
-                params.weight = 1;
-                card.setLayoutParams(params);
+                ValueEventListener initialItemsListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        itemsList.clear();
+                        for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                            if (!personalItemIDs.contains(itemSnapshot.getKey())) continue;
+                            Item newItem = itemSnapshot.getValue(Item.class);
+                            itemsList.add(newItem);
+                        }
 
-                // Set CardView corner radius
-                card.setRadius(9);
+                        mAdapter.notifyDataSetChanged();
+                    }
 
-                // Set cardView content padding
-                card.setContentPadding(15, 15, 15, 15);
-
-                // Set a background color for CardView
-                card.setCardBackgroundColor(Color.parseColor("#FFC6D6C3"));
-
-                // Set the CardView maximum elevation
-                card.setMaxCardElevation(15);
-
-                // Set CardView elevation
-                card.setCardElevation(9);
-
-                // Initialize a new TextView to put in CardView
-                TextView tv = new TextView(getApplicationContext());
-                tv.setLayoutParams(params);
-                tv.setText("Hi Abby :)");//newItem.getDescription());
-                // Need to setId()?
-                tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-
-                // Put the TextView in CardView
-                card.addView(tv);
-
-                cardsLayout.addView(card);
-                */
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // TODO
+                        // Getting Metadata failed, log a message
+                        //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                        // ...
+                    }
+                };
+                initialItemsReference.addListenerForSingleValueEvent(initialItemsListener); // Use this for now, perhaps switch to child event listener later?
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // TODO
-                // Getting Metadata failed, log a message
-                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         };
-        initialItemsReference.addValueEventListener(initialItemsListener); // Use this for now, perhaps switch to child event listener later?
-        //initialItemsReference.addListenerForSingleValueEvent(initialItemsListener);
-
-        /*DatabaseReference newItemsReference = mDatabase.getReference().child("bucket_list_items");
-        ValueEventListener newItemListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Item newItem = dataSnapshot.getValue(Item.class);
-                itemsList.add(newItem);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // TODO
-                // Getting Metadata failed, log a message
-                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        };
-        newItemsReference.addValueEventListener(newItemListener);*/
+        personalListReference.addValueEventListener(personalListListener);
 
         mAdapter = new ItemsAdapter(itemsList);
         cardsLayout.setAdapter(mAdapter);
