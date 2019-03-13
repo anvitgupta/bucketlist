@@ -38,7 +38,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Item item = itemsList.get(position);
+        holder.name.setText(item.getName());
         holder.description.setText(item.getDescription());
+        holder.creator.setText("Created by: " + item.getCreator());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -49,10 +51,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
 
     // QuestionViewHolder
     public static class ItemsViewHolder extends RecyclerView.ViewHolder {
+        protected TextView name;
         protected TextView description;
+        protected TextView creator;
         public ItemsViewHolder(View v) { // expects CardView?
             super(v);
-            description = (TextView) v.findViewById(R.id.description);
+            name = v.findViewById(R.id.name);
+            description = v.findViewById(R.id.description);
+            creator = v.findViewById(R.id.creator);
         }
     }
 }

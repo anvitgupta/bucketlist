@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user == null){
+                if(user == null) {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                 }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         final FirebaseUser user  = firebaseAuth.getCurrentUser();
-        textView.setText("Account: " + user.getEmail());
+        textView.setText("Account: " + user.getDisplayName());
 
         deleteAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
