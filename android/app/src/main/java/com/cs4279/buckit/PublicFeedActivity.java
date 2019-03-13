@@ -38,7 +38,7 @@ public class PublicFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_public_feed);
 
         cardsLayout = findViewById(R.id.cardsList);
         itemsList = new ArrayList<Item>();

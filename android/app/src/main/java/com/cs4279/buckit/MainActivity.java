@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         final FirebaseUser user  = firebaseAuth.getCurrentUser();
-        textView.setText("Account: " + user.getDisplayName());
+        textView.setText("Account: " + user.getEmail());
 
         deleteAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
