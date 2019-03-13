@@ -6,8 +6,22 @@ target 'BucketListIOS' do
   use_frameworks!
 
   # Pods for BucketListIOS
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'FirebaseDatabase'
+  pod 'FirebaseStorage'
+  
+  #pod 'GoogleSignIn'
+  pod 'FirebaseUI'
+  
+  #pod 'FBSDKLoginKit'
+  #pod 'FBSDKCoreKit'
 
-pod 'Firebase/Core'
-pod 'Firebase/Auth'
+#pod 'FirebaseUI/Auth'
+
+#pod 'FirebaseUI/Google'
+#pod 'FirebaseUI/Facebook'
+#pod 'FirebaseUI/Twitter'
+#pod 'FirebaseUI/Phone'
 
 end
