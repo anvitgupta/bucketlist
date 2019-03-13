@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/style.css"> 
 </head>
 <body>
     <script src="scripts/firebase.js"></script>
     <script src="scripts/profile.js"></script>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Buck It</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+        <a class="navbar-brand" href="#">Buck It</a>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="profile.html">Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="feed.html">Activity Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discovery.html">Discovery Page</a>
+                </li>
+            </ul>
             <ul class="navbar-nav ml-auto">
                 <div id="user-container">
                     <button id="sign-out" class=" btn btn-info">
@@ -24,11 +30,9 @@
                     </button>
                 </div>
             </ul>
-            </div>
-        </div>
     </nav>
     <hr class="my-4">
-    <div class="container center">
+    <div class="container">
         <hr class="my-4">
         <div class="profile-userpic">
             <img id="userProfilePic">
@@ -43,6 +47,10 @@
                 <div id="userFollowing"></div>
             </div>
         </div>
+        <hr class="my-3">
+        <div class="row center">
+            <a href="makePost.html" id="makePost" class="btn btn-outline-light center">Buck It!</a>
+        </div>
     </div>
     <div class="container">
         <div class="row">
@@ -51,8 +59,13 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Posts</h5>
                 </div>
+                <div class = "photos" id="photos"></div>
+                <div id="newphotos"></div>
             </div>
-            </div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <
         </div>
     </div>
 </body>

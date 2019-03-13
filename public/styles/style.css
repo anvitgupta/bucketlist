@@ -144,3 +144,23 @@
     display: flex;
     justify-content: space-around;
   }
+
+  .center{
+    text-align: center;
+    margin: auto;
+  }
+
+  .post-comment{
+    height: 100px;
+  }
+
+  .photos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+  }
+
+  .bucket-image{
+    padding: 5px;
+  }

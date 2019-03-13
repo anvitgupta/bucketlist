@@ -1,9 +1,11 @@
 var firebase = app_fireBase
 var user = firebase.auth().currentUser;
+var storage = firebase.storage();
 
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
         
+        document.getElementById('sign-out').addEventListener('click', signOut);
         document.getElementById("userProfilePic").src = user.photoURL
         document.getElementById("userName").textContent = user.displayName
         document.getElementById("userID").textContent = '@' + user.displayName.replace(/\s/g, '') 
@@ -17,8 +19,36 @@ firebase.auth().onAuthStateChanged(function(user){
             console.log("  Email: " + profile.email);
             console.log("  Photo URL: " + profile.photoURL);
             });
+        
+        var numberPosts = 10;
+        var appendPhotos = document.getElementById("photos");
 
-        document.getElementById('sign-out').addEventListener('click', signOut);      
+        for (var i = 1; i <= numberPosts; i++) {
+            photoId = i + 1;
+            refPath = storage.ref(user.displayName.replace(/\s/g, '') + '/' + i.toString() + '.jpg');
+            (function(pid) {
+                refPath.getDownloadURL().then(function(url) {
+                    
+                    var img = document.createElement('img');
+                    img.src = url;
+                    img.style.width = '150px';
+                    img.style.height = '150px';
+                    img.style.borderRadius = '50%';
+                    img.id = "bucket-img";
+                    img.style.marginTop = '25px';
+                    img.style.marginBottom = '50px';
+                    img.style.marginLeft = '25px';
+                    img.style.marginRight = '25px';
+                    appendPhotos.appendChild(img);
+                    console.log(appendPhotos)
+
+                }).catch(function(error) {
+                    console.log(error);
+                });
+            })(photoId);
+        }
+
+
 
     }else{
         uid=null;

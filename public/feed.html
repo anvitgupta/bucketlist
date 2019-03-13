@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css"> 
+</head>
+<body>
+    <script src="scripts/firebase.js"></script>
+    <script src="scripts/feed.js"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Buck It</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">Profile</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="feed.html"><span class="sr-only">(current)</span>Activity Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discovery.html">Discovery Page</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <div id="user-container">
+                    <button id="sign-out" class=" btn btn-info">
+                        Sign-out
+                    </button>
+                </div>
+            </ul>
+    </nav>
+</body>
+</html>

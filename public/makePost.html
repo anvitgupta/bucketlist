@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css"> 
+</head>
+<body>
+    <script src="scripts/firebase.js"></script>
+    <script src="scripts/makePost.js"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Buck It</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="feed.html">Activity Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discovery.html">Discovery Page</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <div id="user-container">
+                    <button id="sign-out" class=" btn btn-info">
+                        Sign-out
+                    </button>
+                </div>
+            </ul>
+    </nav>
+    <hr class="my-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                <h5 class="card-title text-center">Add to Buckit List</h5>
+                <form class="form-signin" id="form">
+                    <div class ="form-group">
+                        <input class="form-control" type="text" id="activity-input" placeholder="Activity">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input class="form-control" type="date" id="date-input">
+                            </div>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file-input" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Add a picture!</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="description-input" rows="3"></textarea>
+                    </div>
+                    <button id="submit" class="btn btn-lg btn-primary btn-block text-uppercase" type="button">Buck it!</button>
+                    <hr class="my-4">
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
