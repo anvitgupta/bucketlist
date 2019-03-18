@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,7 @@ public class AddItemActivity extends AppCompatActivity {
     Button submitButton;
     private DatabaseReference mDatabase;
     private int count;
+    FirebaseAuth firebaseAuth;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,10 @@ public class AddItemActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.submitButton);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
+
+        // TODO: No need for Metadata on lenght of list, switch to push() method instead.
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -48,7 +53,11 @@ public class AddItemActivity extends AppCompatActivity {
             }
         };
         mDatabase.addValueEventListener(postListener);
+        // From the TO-DO to here is probably not needed anymore
 
+
+        final DatabaseReference newItemsReference = mDatabase.child("bucket_list_items");
+        final DatabaseReference personalBucketListReference = mDatabase.child("users").child(firebaseAuth.getCurrentUser().getUid()).child("personal_list");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +72,12 @@ public class AddItemActivity extends AppCompatActivity {
                 ++count;
                 mDatabase.child("demo").child("" + count).setValue(newItemStr);
                 mDatabase.child("demo_count").setValue("" + count);
+
+                Item newItem = new Item(newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), "03-13-19", 1.0);
+                DatabaseReference pushedReference = newItemsReference.push();
+                pushedReference.setValue(newItem);
+                String itemKey = pushedReference.getKey();
+                personalBucketListReference.push().setValue(itemKey);
 
                 finish();
             }

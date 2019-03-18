@@ -36,6 +36,9 @@
         <activity
             android:name=".AddItemActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".PublicFeedActivity"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
