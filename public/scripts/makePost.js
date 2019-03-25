@@ -25,20 +25,13 @@ firebase.auth().onAuthStateChanged(function(user){
 function sendData() {
 
     user = firebase.auth().currentUser;
-    const postActivity = document.getElementById('activity-input').value.toString();
+    const postTitle = document.getElementById('activity-input').value.toString();
     const postDate = document.getElementById('date-input').value.toString();
-    const convertFile = document.getElementById('file-input').files[0];
     const postDescription = document.getElementById('description-input').value.toString();
     const userName = user.displayName.toString().replace(/\s/g, '');
-    
-    var img = new Image();
-    img.src = document.getElementById('file-input').files[0];
-    
-    
-    console.log(postActivity);
-    console.log(postDate);
-    console.log(convertFile);
-    console.log(postDescription);
+
+    var reader  = new FileReader();
+    console.log(document.getElementById('file-input').files[0]);
 
     // var reader = new FileReader();
     // const convertFile = reader.readAsText(file);
@@ -54,14 +47,16 @@ function sendData() {
     // })
     // .catch(console.error);
 
+    var newPostKey = firebase.database().ref().child('bucket_list_items').push().key;
+
     var postData = {
+        title: postTitle,
         creator: user.displayName,
         date : postDate,
         description: postDescription,
-        users_added: [userName] 
+        users_added: [userName],
+        key: newPostKey
     }
-
-    var newPostKey = firebase.database().ref().child('bucket_list_items').push().key;
 
     var updates = {};
     updates['/bucket_list_items/' + newPostKey] = postData;
