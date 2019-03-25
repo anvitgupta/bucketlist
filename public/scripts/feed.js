@@ -5,13 +5,16 @@ var database = firebase.database();
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
         
-        ref.once('value', function(snapshot) {
+        var bucketList = [];
+        ref.once('bucket_list_items', function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
                 var childKey = childSnapshot.key;
                 var childData = childSnapshot.val();
-                // ...
+                bucketList.push(childData);
             });
         });
+
+        console.log(bucketList);
         
     }else{
         uid=null;
