@@ -32,6 +32,7 @@ public class PublicFeedActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private FirebaseDatabase mDatabase;
     private ArrayList<Item> itemsList;
+    private HashSet<String> personalItemIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class PublicFeedActivity extends AppCompatActivity {
 
         cardsLayout = findViewById(R.id.cardsList);
         itemsList = new ArrayList<Item>();
+
+        personalItemIds = (HashSet<String>) getIntent().getSerializableExtra("personalItemIds");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,6 +69,9 @@ public class PublicFeedActivity extends AppCompatActivity {
                 itemsList.clear();
                 for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
                     Item newItem = itemSnapshot.getValue(Item.class);
+                    if (personalItemIds.contains(itemSnapshot.getKey())) {
+                        newItem.setIsInPersonalList(true);
+                    }
                     itemsList.add(newItem);
                 }
 
@@ -80,7 +86,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                 // ...
             }
         };
-        initialItemsReference.addListenerForSingleValueEvent(initialItemsListener); // Use this for now, perhaps switch to child event listener later?
+        initialItemsReference.addValueEventListener(initialItemsListener);
 
         mAdapter = new ItemsAdapter(itemsList);
         cardsLayout.setAdapter(mAdapter);
