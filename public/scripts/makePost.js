@@ -31,7 +31,9 @@ function sendData() {
     const postDescription = document.getElementById('description-input').value.toString();
     const userName = user.displayName.toString().replace(/\s/g, '');
     
-    //convertFile = reader.readAsBinaryString(file);
+    var img = new Image();
+    img.src = document.getElementById('file-input').files[0];
+    
     
     console.log(postActivity);
     console.log(postDate);
@@ -52,21 +54,41 @@ function sendData() {
     // })
     // .catch(console.error);
 
-    var bucketItem = database.ref('bucket_list_items/');
+    var postData = {
+        creator: user.displayName,
+        date : postDate,
+        description: postDescription,
+        users_added: [userName] 
+    }
 
-    bucketItem.set({
-        postActivity: {
-            creator: user.displayName,
-            date : postDate,
-            description: postDescription,
-            users_added: [userName] 
-        }
-    }).then(function() {
+    var newPostKey = firebase.database().ref().child('bucket_list_items').push().key;
+
+    var updates = {};
+    updates['/bucket_list_items/' + newPostKey] = postData;
+
+    firebase.database().ref().update(updates)
+    .then(function(){
         console.log('Synchronization succeeded');
-      })
-      .catch(function(error) {
+    })
+    .catch(function(error) {
         console.log('Synchronization failed');
-      });
+    });
+
+    // var bucketItem = database.ref('bucket_list_items/');
+
+    // bucketItem.set({
+    //     postActivity: {
+    //         creator: user.displayName,
+    //         date : postDate,
+    //         description: postDescription,
+    //         users_added: [userName] 
+    //     }
+    // }).then(function() {
+    //     console.log('Synchronization succeeded');
+    //   })
+    //   .catch(function(error) {
+    //     console.log('Synchronization failed');
+    //   });
 }
 
 function signOut() {

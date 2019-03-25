@@ -9,6 +9,8 @@ firebase.auth().onAuthStateChanged(function(user){
         document.getElementById("userProfilePic").src = user.photoURL
         document.getElementById("userName").textContent = user.displayName
         document.getElementById("userID").textContent = '@' + user.displayName.replace(/\s/g, '') 
+        
+        // Get following & follower
         document.getElementById("userFollowers").textContent = '2 Follows'
         document.getElementById("userFollowing").textContent = '2 Following'
         
@@ -20,6 +22,7 @@ firebase.auth().onAuthStateChanged(function(user){
             console.log("  Photo URL: " + profile.photoURL);
             });
         
+        // Get number of posts
         var numberPosts = 10;
         var appendPhotos = document.getElementById("photos");
 
@@ -47,9 +50,7 @@ firebase.auth().onAuthStateChanged(function(user){
                 });
             })(photoId);
         }
-
-
-
+        
     }else{
         uid=null;
         window.location.replace("login.html");
