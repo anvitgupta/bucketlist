@@ -35,7 +35,7 @@ public class AddItemActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        // TODO: No need for Metadata on lenght of list, switch to push() method instead.
+        // TODO: No need for Metadata on length of list, switch to push() method instead.
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
