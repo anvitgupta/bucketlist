@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    
 
 /*
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {

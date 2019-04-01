@@ -7,16 +7,49 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class LogViewController: UIViewController {
+class LogInViewController: UIViewController {
 
+    
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var password: UITextField!
+    
+    @IBOutlet weak var errorMessage: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    
+    @IBAction func didTapCancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func didTapLogin(_ sender: Any) {
+        Auth.auth().signIn(withEmail: self.email.text!, password: self.password.text!, completion: { (user, error) in
+            
+            if(error == nil){
+                //self.databaseRef.child("user").child(user!.uid).child("email").setValue(self.email.text!)
+                // TO DO: ensure user actually exists
+                //self.performSegue(withIdentifier: "MainTabController", sender: nil)
+                let mainTabController = self.storyboard?.instantiateViewController(withIdentifier: "MainTabController") as! MainTabController
+                
+                self.present(mainTabController, animated: true, completion: nil)
+            } else {
+                self.errorMessage.text = error?.localizedDescription
+            }
+            
+            //if(user != nil) {
+            
+             //} else {
+             //   print(error)
+             //}
+            
+        })
+    }
     /*
     // MARK: - Navigation
 

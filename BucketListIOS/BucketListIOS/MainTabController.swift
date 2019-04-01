@@ -8,10 +8,16 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
+
 
 class MainTabController : UITabBarController {
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.user = Auth.auth().currentUser
     }
 }

@@ -14,8 +14,8 @@ class SignUpViewController: UIViewController {
 
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
-    
     @IBOutlet weak var signUp: UIButton!
+    @IBOutlet weak var errorMessage: UILabel!
     
     var databaseRef = Database.database().reference()
     
@@ -26,6 +26,10 @@ class SignUpViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func didTapCancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func didTapSignUp(_ sender: UIButton) {
         
         signUp.isEnabled = false
@@ -34,23 +38,30 @@ class SignUpViewController: UIViewController {
             
             if(error != nil){
                 if(error!._code == 17999){
-                    //errorMessage = "Invalid email Address"
+                    self.errorMessage.text = "Invalid email Address"
                 } else {
-                    //errorMessage = error?.localizedDescription
+                    self.errorMessage.text = error?.localizedDescription
                 }
             } else {
-                //errorMessage = "Registered Successfully"
+                self.errorMessage.text = "Registered Successfully"
                 Auth.auth().signIn(withEmail: self.email.text!, password: self.password.text!, completion: { (user, error) in
                     
+                    if(error == nil){
+                        //self.databaseRef.child("user").child(user!.uid).child("email").setValue(self.email.text!)
+                        
+                        //self.performSegue(withIdentifier: "MainTabController", sender: nil)
+                        let mainTabController = self.storyboard?.instantiateViewController(withIdentifier: "MainTabController") as! MainTabController
+                        
+                        self.present(mainTabController, animated: true, completion: nil)
+                    }
                     
-                        //self.databaseRef.child("user_profiles").child(user!.uid).child("email").setValue(self.email.text!)
-                    if(user != nil) {
+                    /*if(user != nil) {
                         let mainTabController = self.storyboard?.instantiateViewController(withIdentifier: "MainTabController") as! MainTabController
                         
                         self.present(mainTabController, animated: true, completion: nil)
                     } else {
                         print(error)
-                    }
+                    }*/
                     
                 })}
             }
@@ -58,10 +69,7 @@ class SignUpViewController: UIViewController {
     
     }
     
-    @IBAction func didTapCancel(_ sender: UIButton) {
-        
-        dismiss(animated: true, completion: nil)
-    }
+    
     
     @IBAction func textDidChange(_ sender: UITextField) {
         

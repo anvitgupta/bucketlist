@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2951A50FF118724D270BD569 /* Pods_BucketListIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1864C04323DBEE019D32795 /* Pods_BucketListIOS.framework */; };
+		8E3F25E822528A1D00F179F1 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F25E722528A1D00F179F1 /* AccountViewController.swift */; };
 		8E68085922387D9800D4AE2B /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68085822387D9800D4AE2B /* MainTabController.swift */; };
 		8E68085B223980C700D4AE2B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68085A223980C700D4AE2B /* SignUpViewController.swift */; };
 		8E68085D2239816D00D4AE2B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E68085C2239816D00D4AE2B /* LogInViewController.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		804821584E66775184A4C220 /* Pods-BucketListIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BucketListIOS.release.xcconfig"; path = "Target Support Files/Pods-BucketListIOS/Pods-BucketListIOS.release.xcconfig"; sourceTree = "<group>"; };
+		8E3F25E722528A1D00F179F1 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		8E68085822387D9800D4AE2B /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		8E68085A223980C700D4AE2B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		8E68085C2239816D00D4AE2B /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				8E90E90122110F18005907C0 /* AppDelegate.swift */,
 				8E90E90322110F18005907C0 /* ViewController.swift */,
 				8E90E90522110F18005907C0 /* Main.storyboard */,
+				8E3F25E722528A1D00F179F1 /* AccountViewController.swift */,
 				8E90E90822110F1B005907C0 /* Assets.xcassets */,
 				8E90E90A22110F1C005907C0 /* LaunchScreen.storyboard */,
 				8E90E90D22110F1C005907C0 /* Info.plist */,
@@ -290,6 +293,7 @@
 			files = (
 				8E90E90422110F18005907C0 /* ViewController.swift in Sources */,
 				8E90E90222110F18005907C0 /* AppDelegate.swift in Sources */,
+				8E3F25E822528A1D00F179F1 /* AccountViewController.swift in Sources */,
 				8E68085B223980C700D4AE2B /* SignUpViewController.swift in Sources */,
 				8E68085D2239816D00D4AE2B /* LogInViewController.swift in Sources */,
 				8E68085922387D9800D4AE2B /* MainTabController.swift in Sources */,
