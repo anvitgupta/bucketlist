@@ -91,7 +91,7 @@ public class PublicFeedActivity extends AppCompatActivity {
         mAdapter = new ItemsAdapter(itemsList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddItemActivity.class));
+                startActivity(new Intent(getApplicationContext(),MarkAsCompleteActivity.class));
             }
         });  // How to get info on which card was clicked over to the new activity?
         cardsLayout.setAdapter(mAdapter);

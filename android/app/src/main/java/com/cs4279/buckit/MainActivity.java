@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ItemsAdapter(itemsList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddItemActivity.class));
+                startActivity(new Intent(getApplicationContext(),MarkAsCompleteActivity.class));
             }
         });
         cardsLayout.setAdapter(mAdapter);
