@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,9 +39,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Item item = itemsList.get(position);
-        holder.name.setText(item.getName());
+        holder.title.setText(item.getTitle());
         holder.description.setText(item.getDescription());
         holder.creator.setText("Created by: " + item.getCreator());
+        if (item.isInPersonalList()) {
+            holder.markAsDoneButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.addToBuckItButton.setVisibility(View.VISIBLE);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -51,14 +57,18 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
 
     // QuestionViewHolder
     public static class ItemsViewHolder extends RecyclerView.ViewHolder {
-        protected TextView name;
+        protected TextView title;
         protected TextView description;
         protected TextView creator;
+        protected Button addToBuckItButton;
+        protected Button markAsDoneButton;
         public ItemsViewHolder(View v) { // expects CardView?
             super(v);
-            name = v.findViewById(R.id.name);
+            title = v.findViewById(R.id.title);
             description = v.findViewById(R.id.description);
             creator = v.findViewById(R.id.creator);
+            addToBuckItButton = v.findViewById(R.id.addToBuckItButton);
+            markAsDoneButton = v.findViewById(R.id.markAsDoneButton);
         }
     }
 }

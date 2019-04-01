@@ -107,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
         publicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PublicFeedActivity.class));
+                Intent i = new Intent(getApplicationContext(),PublicFeedActivity.class);
+                i.putExtra("personalItemIds", personalItemIDs);
+                startActivity(i);
             }
         });
 
