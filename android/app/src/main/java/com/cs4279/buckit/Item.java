@@ -33,6 +33,7 @@ public class Item {
         isInPersonalList = false;
     }
 
+    // @Exclude
     public String getKey() { return key; }
 
     public String getTitle() {
@@ -49,6 +50,7 @@ public class Item {
 
     public double getScore() { return score; }
 
+    @Exclude
     public boolean isInPersonalList() { return isInPersonalList; }
 
     public void setIsInPersonalList(boolean isInPersonalList) {

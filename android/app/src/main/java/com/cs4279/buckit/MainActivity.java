@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
                             if (!personalItemIDs.contains(itemSnapshot.getKey())) continue;
                             Item newItem = itemSnapshot.getValue(Item.class);
+                            newItem.setIsInPersonalList(true);  // set to false by default
                             itemsList.add(newItem);
                         }
 
@@ -168,7 +169,12 @@ public class MainActivity extends AppCompatActivity {
         };
         personalListReference.addValueEventListener(personalListListener);
 
-        mAdapter = new ItemsAdapter(itemsList);
+        mAdapter = new ItemsAdapter(itemsList, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddItemActivity.class));
+            }
+        });
         cardsLayout.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         cardsLayout.setLayoutManager(mLayoutManager);

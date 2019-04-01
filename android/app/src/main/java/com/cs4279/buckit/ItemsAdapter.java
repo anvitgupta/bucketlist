@@ -16,10 +16,12 @@ import java.util.ArrayList;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder> {
     private ArrayList<Item> itemsList;
+    private View.OnClickListener markAsDoneListener;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ItemsAdapter(ArrayList<Item> itemsList) {
+    public ItemsAdapter(ArrayList<Item> itemsList, View.OnClickListener markAsDoneListener) {
         this.itemsList = itemsList;
+        this.markAsDoneListener = markAsDoneListener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -47,6 +49,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         } else {
             holder.addToBuckItButton.setVisibility(View.VISIBLE);
         }
+
+        holder.markAsDoneButton.setOnClickListener(markAsDoneListener);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

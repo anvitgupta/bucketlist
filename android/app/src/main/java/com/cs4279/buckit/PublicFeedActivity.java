@@ -70,7 +70,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                 for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
                     Item newItem = itemSnapshot.getValue(Item.class);
                     if (personalItemIds.contains(itemSnapshot.getKey())) {
-                        newItem.setIsInPersonalList(true);
+                        newItem.setIsInPersonalList(true);  // set to false by default
                     }
                     itemsList.add(newItem);
                 }
@@ -88,7 +88,12 @@ public class PublicFeedActivity extends AppCompatActivity {
         };
         initialItemsReference.addValueEventListener(initialItemsListener);
 
-        mAdapter = new ItemsAdapter(itemsList);
+        mAdapter = new ItemsAdapter(itemsList, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddItemActivity.class));
+            }
+        });  // How to get info on which card was clicked over to the new activity?
         cardsLayout.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         cardsLayout.setLayoutManager(mLayoutManager);
