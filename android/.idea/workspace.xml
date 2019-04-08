@@ -387,7 +387,7 @@
     <property name="SearchEverywhereHistoryKey" value="CHANGE-ME&#9;null&#9;null" />
     <property name="add_unversioned_files" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="device.picker.selection" value="98897a3144344c4d51" />
+    <property name="device.picker.selection" value="3153494459563098" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.1.4" />
   </component>
