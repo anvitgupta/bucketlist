@@ -169,10 +169,19 @@ public class MainActivity extends AppCompatActivity {
         };
         personalListReference.addValueEventListener(personalListListener);
 
-        mAdapter = new ItemsAdapter(itemsList, new View.OnClickListener() {
-            @Override
+        mAdapter = new ItemsAdapter(itemsList, new CardClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MarkAsCompleteActivity.class));
+                // Should not be called until the setter methods from CardClickListener() have been called
+                if (buttonType == MARK_AS_DONE) {
+                    Intent i = new Intent(getApplicationContext(), MarkAsCompleteActivity.class);
+                    i.putExtra("cardID", cardID);
+                    startActivity(i);
+                } else if (buttonType == ADD_TO_BUCKIT) {
+                    Intent i = new Intent(getApplicationContext(), MarkAsCompleteActivity.class);
+                    i.putExtra("cardID", cardID);
+                    startActivity(i);
+                }
+                finish();
             }
         });
         cardsLayout.setAdapter(mAdapter);

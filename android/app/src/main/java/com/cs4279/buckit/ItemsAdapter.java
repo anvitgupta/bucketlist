@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder> {
     private ArrayList<Item> itemsList;
-    private View.OnClickListener markAsDoneListener;
+    private CardClickListener markAsDoneListener;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ItemsAdapter(ArrayList<Item> itemsList, View.OnClickListener markAsDoneListener) {
+    public ItemsAdapter(ArrayList<Item> itemsList, CardClickListener markAsDoneListener) {
         this.itemsList = itemsList;
         this.markAsDoneListener = markAsDoneListener;
     }
@@ -44,13 +44,24 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         holder.title.setText(item.getTitle());
         holder.description.setText(item.getDescription());
         holder.creator.setText("Created by: " + item.getCreator());
+        if (item.getCompleted()) {
+            holder.markAsDoneButton.setEnabled(false);
+            holder.markAsDoneButton.setAlpha(0.5f);
+        }
         if (item.isInPersonalList()) {
             holder.markAsDoneButton.setVisibility(View.VISIBLE);
+            holder.addToBuckItButton.setVisibility(View.GONE);
+
         } else {
             holder.addToBuckItButton.setVisibility(View.VISIBLE);
+            holder.markAsDoneButton.setVisibility(View.GONE);
         }
 
+        markAsDoneListener.setCardID(item.getKey());
+        markAsDoneListener.setButtonType(CardClickListener.MARK_AS_DONE);
         holder.markAsDoneButton.setOnClickListener(markAsDoneListener);
+
+        // TODO: Implement addToPersonalListListener. Adds new item to personal list? Not sure how yet
     }
 
     // Return the size of your dataset (invoked by the layout manager)

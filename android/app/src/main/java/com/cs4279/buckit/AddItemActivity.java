@@ -74,7 +74,7 @@ public class AddItemActivity extends AppCompatActivity {
                 mDatabase.child("demo_count").setValue("" + count);
 
                 DatabaseReference pushedReference = newItemsReference.push();
-                Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), "03-13-19", 1.0);
+                Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), "03-13-19", false, 1.0);
                 pushedReference.setValue(newItem);
                 String itemKey = pushedReference.getKey();
                 personalBucketListReference.push().setValue(itemKey);

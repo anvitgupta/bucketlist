@@ -1,5 +1,6 @@
 package com.cs4279.buckit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -23,6 +24,7 @@ public class MarkAsCompleteActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private int count;
     FirebaseAuth firebaseAuth;
+    private String cardID;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,56 +36,23 @@ public class MarkAsCompleteActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
-
-        // TODO: No need for Metadata on length of list, switch to push() method instead.
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Metadata object and use the values to update the UI
-                Metadata count_data = dataSnapshot.getValue(Metadata.class);
-                count = Integer.parseInt(count_data.demo_count);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // TODO
-                // Getting Metadata failed, log a message
-                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        };
-        mDatabase.addValueEventListener(postListener);
-        // From the TO-DO to here is probably not needed anymore
+        cardID = getIntent().getStringExtra("cardID");
 
 
-        final DatabaseReference newItemsReference = mDatabase.child("bucket_list_items");
-        final DatabaseReference personalBucketListReference = mDatabase.child("users").child(firebaseAuth.getCurrentUser().getUid()).child("personal_list");
-        /*submitButton.setOnClickListener(new View.OnClickListener() {
+        final DatabaseReference itemReference = mDatabase.child("bucket_list_items").child(cardID);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newItemStr = newItemText.getText().toString();
+                // Set boolean completed flag in firebase to true
+                itemReference.child("completed").setValue(true);
 
-                if(TextUtils.isEmpty(newItemStr)){
-                    Toast.makeText(getApplicationContext(),"Please fill in the required fields",Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                // TODO: Create post indicating that item is complete
 
-                // Send to Real-time Database
-                ++count;
-                mDatabase.child("demo").child("" + count).setValue(newItemStr);
-                mDatabase.child("demo_count").setValue("" + count);
-
-                DatabaseReference pushedReference = newItemsReference.push();
-                Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), "03-13-19", 1.0);
-                pushedReference.setValue(newItem);
-                String itemKey = pushedReference.getKey();
-                personalBucketListReference.push().setValue(itemKey);
-
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
-        });*/
-
-
+        });
     }
 
 }

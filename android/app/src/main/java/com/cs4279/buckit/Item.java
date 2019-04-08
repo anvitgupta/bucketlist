@@ -14,6 +14,8 @@ public class Item {
     private String description;
     private String creator;
     private String date;
+    private boolean completed;
+    // TODO: add this: private int timestamp;
     private double score; // Something to sort the items by in the activity feed later perhaps?
 
     private boolean isInPersonalList;
@@ -22,12 +24,13 @@ public class Item {
         // Default constructor required for calls to DataSnapshot.getValue(Item.class)
     }
 
-    public Item(String key, String title, String description, String creator, String date, double score) {
+    public Item(String key, String title, String description, String creator, String date, boolean completed, double score) {
         this.key = key;
         this.title = title;
         this.description = description;
         this.creator = creator;
         this.date = date;
+        this.completed = completed;
         this.score = score;
 
         isInPersonalList = false;
@@ -48,6 +51,8 @@ public class Item {
 
     public String getDate() { return date; }
 
+    public boolean getCompleted() { return completed; }
+
     public double getScore() { return score; }
 
     @Exclude
@@ -57,6 +62,10 @@ public class Item {
         this.isInPersonalList = isInPersonalList;
     }
 
+    public void markCompleted() {
+        completed = true;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -64,6 +73,7 @@ public class Item {
         result.put("description", description);
         result.put("creator", creator);
         result.put("date", date);
+        result.put("completed", completed);
         result.put("score", score);
 
         return result;
