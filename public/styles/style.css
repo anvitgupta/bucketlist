@@ -164,3 +164,14 @@
   .bucket-image{
     padding: 5px;
   }
+
+  .populate_feed{
+    display: block;
+    align-content: center;
+  }
+  .feed_post{
+    width: 100%;
+    border-bottom: 1px solid rgb(201, 204, 201) ;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }

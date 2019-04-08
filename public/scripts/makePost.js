@@ -49,11 +49,13 @@ function sendData() {
 
     var postData = {
         title: postTitle,
-        creator: user.displayName,
+        creator: userName,
         date : postDate,
         description: postDescription,
+        score: 0,
         pic: loadImage,
         users_added: [userName],
+        timestamp: Date.now(),
         key: newPostKey
     }
 
