@@ -16,7 +16,7 @@ firebase.auth().onAuthStateChanged(function(user){
                 var postData = {
                     email: user.email,
                     username: user.displayName.replace(/\s/g, ''),
-                    personal_list: []
+                    personal_list: {Hash: "Hash"}
                 }
 
                 var updates = {};
@@ -41,14 +41,6 @@ firebase.auth().onAuthStateChanged(function(user){
         document.getElementById("userFollowers").textContent = '2 Follows'
         document.getElementById("userFollowing").textContent = '2 Following'
         
-        // user.providerData.forEach(function (profile) {
-        //     console.log("Sign-in provider: " + profile.providerId);
-        //     console.log("  Provider-specific UID: " + profile.getIdToken());
-        //     console.log("  Name: " + profile.displayName);
-        //     console.log("  Email: " + profile.email);
-        //     console.log("  Photo URL: " + profile.photoURL);
-        //     });
-        
         // Get number of posts
         var numberPosts = 10;
         var appendPhotos = document.getElementById("photos");
@@ -70,7 +62,6 @@ firebase.auth().onAuthStateChanged(function(user){
                     img.style.marginLeft = '25px';
                     img.style.marginRight = '25px';
                     appendPhotos.appendChild(img);
-                    console.log(appendPhotos)
 
                 }).catch(function(error) {
                     console.log(error);
