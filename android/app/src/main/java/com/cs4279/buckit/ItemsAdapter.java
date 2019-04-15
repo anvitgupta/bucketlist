@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -16,12 +17,12 @@ import java.util.ArrayList;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder> {
     private ArrayList<Item> itemsList;
-    private CardClickListener markAsDoneListener;
+    private ArrayList<CardClickListener> cardClickListeners;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ItemsAdapter(ArrayList<Item> itemsList, CardClickListener markAsDoneListener) {
+    public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<CardClickListener> cardClickListeners) {
         this.itemsList = itemsList;
-        this.markAsDoneListener = markAsDoneListener;
+        this.cardClickListeners = cardClickListeners;
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,17 +52,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         if (item.isInPersonalList()) {
             holder.markAsDoneButton.setVisibility(View.VISIBLE);
             holder.addToBuckItButton.setVisibility(View.GONE);
-
+            cardClickListeners.get(position).setCardID(item.getKey());
+            cardClickListeners.get(position).setButtonType(CardClickListener.MARK_AS_DONE);
+            holder.markAsDoneButton.setOnClickListener(cardClickListeners.get(position));
         } else {
             holder.addToBuckItButton.setVisibility(View.VISIBLE);
             holder.markAsDoneButton.setVisibility(View.GONE);
+            cardClickListeners.get(position).setCardID(item.getKey());
+            cardClickListeners.get(position).setButtonType(CardClickListener.ADD_TO_BUCKIT);
+            holder.addToBuckItButton.setOnClickListener(cardClickListeners.get(position));
         }
-
-        markAsDoneListener.setCardID(item.getKey());
-        markAsDoneListener.setButtonType(CardClickListener.MARK_AS_DONE);
-        holder.markAsDoneButton.setOnClickListener(markAsDoneListener);
-
-        // TODO: Implement addToPersonalListListener. Adds new item to personal list? Not sure how yet
     }
 
     // Return the size of your dataset (invoked by the layout manager)

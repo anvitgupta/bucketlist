@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -61,7 +62,7 @@ public class PublicFeedActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference initialItemsReference = mDatabase.getReference("bucket_list_items");
+        final DatabaseReference initialItemsReference = mDatabase.getReference("bucket_list_items");
 
         ValueEventListener initialItemsListener = new ValueEventListener() {
             @Override
@@ -88,21 +89,55 @@ public class PublicFeedActivity extends AppCompatActivity {
         };
         initialItemsReference.addValueEventListener(initialItemsListener);
 
-        mAdapter = new ItemsAdapter(itemsList, new CardClickListener() {
+        final DatabaseReference personalListReference = mDatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).child("personal_list");
+
+        class ExtendedCardClickListener extends CardClickListener {
+            @Override
             public void onClick(View v) {
                 // Should not be called until the setter methods from CardClickListener() have been called
                 if (buttonType == MARK_AS_DONE) {
                     Intent i = new Intent(getApplicationContext(), MarkAsCompleteActivity.class);
                     i.putExtra("cardID", cardID);
                     startActivity(i);
+                    finish();
                 } else if (buttonType == ADD_TO_BUCKIT) {
-                    Intent i = new Intent(getApplicationContext(), MarkAsCompleteActivity.class);
-                    i.putExtra("cardID", cardID);
+                    // Get the info from selected card via itemsList and cardID
+                    // Cannot use the index of the card in the list in case it changes between getting and setting the CardClickListener
+                    String title = "", description = "", creator = "", date = "";
+                    int timestamp = -1;
+                    for (Item i : itemsList) {
+                        if (i.getKey() == cardID) {
+                            title = i.getTitle();
+                            description = i.getDescription();
+                            creator = i.getCreator();
+                            date = i.getDate();
+                            timestamp = i.getTimestamp();
+                            break;
+                        }
+                    }
+
+                    DatabaseReference pushedReference = initialItemsReference.push();
+                    Item newItem = new Item(pushedReference.getKey(), title, description, creator, date, false, timestamp, 1.0);
+                    pushedReference.setValue(newItem);
+                    String itemKey = pushedReference.getKey();
+                    personalListReference.push().setValue(itemKey);
+
+                    // Hack to re-run onBindViewHolder in mAdapter
+                    Intent i = new Intent(getApplicationContext(), PublicFeedActivity.class);
+                    personalItemIds.add(pushedReference.getKey());  // Temporarily add ID to local variable
+                    i.putExtra("personalItemIds", personalItemIds);
                     startActivity(i);
+                    finish();
                 }
-                finish();
             }
-        });
+        }
+
+        ArrayList<CardClickListener> listeners = new ArrayList<CardClickListener>();
+        for (int i = 0; i < (itemsList.size() == 0 ? 50 : itemsList.size()); ++i) {
+            listeners.add(new ExtendedCardClickListener());
+        }
+
+        mAdapter = new ItemsAdapter(itemsList, listeners);
         cardsLayout.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         cardsLayout.setLayoutManager(mLayoutManager);
