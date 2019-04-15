@@ -6,7 +6,7 @@ var database = firebase.database();
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
 
-        database.ref().orderByChild('/users').equalTo(user.uid).once('value',snapshot => {
+        database.ref().orderByChild('/users/' + user.uid).once('value',snapshot => {
             if(snapshot.exists()){
                 console.log("Exists");
             }else{
@@ -15,8 +15,7 @@ firebase.auth().onAuthStateChanged(function(user){
 
                 var postData = {
                     email: user.email,
-                    username: user.displayName.replace(/\s/g, ''),
-                    personal_list: {Hash: "Hash"}
+                    username: user.displayName.replace(/\s/g, '')
                 }
 
                 var updates = {};

@@ -1,33 +1,13 @@
 var firebase = app_fireBase
 var user = firebase.auth().currentUser;
 const database = firebase.database();
-var storage = firebase.storage().ref();
+var storageRef = firebase.storage().ref();
 var loadImage = new Image();
 
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
-
-        document.getElementById("file-input").onchange = function (evt){
-            var tgt = evt.target || window.event.srcElement,
-            files = tgt.files;
-
-            if (FileReader && files && files.length) {
-                var fr = new FileReader();
-                fr.onload = function () {
-                    loadImage.src = fr.result;
-                }
-
-                fr.readAsDataURL(files[0]);
-                sleep(2000);
-                console.log(loadImage);
-
-            } else {
-                console.log("Failed")
-            }
-        }
         
         document.getElementById('submit').addEventListener('click', sendData);
-
     }else{
         
         uid=null;
@@ -42,9 +22,7 @@ function sendData() {
     const postDate = document.getElementById('date-input').value.toString();
     const postDescription = document.getElementById('description-input').value.toString();
     const userName = user.displayName.toString().replace(/\s/g, '');
-
-    var reader  = new FileReader();
-    console.log(document.getElementById('file-input').files[0]);
+    const file = document.getElementById("file-input").files[0];
 
     var postToBucketListKey = firebase.database().ref().child('bucket_list_items').push().key;
     var postToUserKey = firebase.database().ref().child('users/' + user.uid + '/personal_list').push().key;
@@ -58,6 +36,15 @@ function sendData() {
         timestamp: Date.now(),
         key: postToBucketListKey,
         completed: false
+    }
+
+    if(file){
+        var reader  = new FileReader();
+        var imageRef = storageRef.child(userName + '/' + postToBucketListKey.toString() + '.jpg');
+        
+        imageRef.put(file).then(function(snapshot) {
+            console.log('Uploaded a blob or file!');
+          });
     }
 
     var updates = {};
