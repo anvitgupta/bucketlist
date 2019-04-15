@@ -145,7 +145,17 @@ public class MainActivity extends AppCompatActivity {
                             if (!personalItemIDs.contains(itemSnapshot.getKey())) continue;
                             Item newItem = itemSnapshot.getValue(Item.class);
                             newItem.setIsInPersonalList(true);  // set to false by default
-                            itemsList.add(newItem);
+
+                            int start_size = itemsList.size();
+                            for (int i = 0; i < start_size; ++i) {
+                                if (itemsList.get(i).getTimestamp() < newItem.getTimestamp()) {
+                                    itemsList.set(i, newItem);
+                                    break;
+                                }
+                            }
+                            if (itemsList.size() == start_size) {
+                                itemsList.add(newItem);
+                            }
                         }
 
                         mAdapter.notifyDataSetChanged();
@@ -183,13 +193,13 @@ public class MainActivity extends AppCompatActivity {
                 } else if (buttonType == ADD_TO_BUCKIT) {
                     // Get the info from selected card via itemsList and cardID
                     // Cannot use the index of the card in the list in case it changes between getting and setting the CardClickListener
-                    String title = "", description = "", creator = "", date = "";
+                    String title = "", description = "", original_creator = "", date = "";
                     int timestamp = -1;
                     for (Item i : itemsList) {
                         if (i.getKey() == cardID) {
                             title = i.getTitle();
                             description = i.getDescription();
-                            creator = i.getCreator();
+                            original_creator = i.getOriginalCreator();
                             date = i.getDate();
                             timestamp = i.getTimestamp();
                             break;
@@ -197,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     DatabaseReference pushedReference = newItemsReference.push();
-                    Item newItem = new Item(pushedReference.getKey(), title, description, creator, date, false, timestamp, 1.0);
+                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, timestamp, -1, 1.0);
                     pushedReference.setValue(newItem);
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);
@@ -211,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ArrayList<CardClickListener> listeners = new ArrayList<CardClickListener>();
-        for (int i = 0; i < (itemsList.size() == 0 ? 50 : itemsList.size()); ++i) {
+        for (int i = 0; i < 50; ++i) {
             listeners.add(new ExtendedCardClickListener());
         }
 

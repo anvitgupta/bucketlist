@@ -19,8 +19,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     private ArrayList<Item> itemsList;
     private ArrayList<CardClickListener> cardClickListeners;
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // Constructor for purely item cards
     public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<CardClickListener> cardClickListeners) {
+        this.itemsList = itemsList;
+        this.cardClickListeners = cardClickListeners;
+    }
+
+    // Constructor for public feed with item cards and activity cards
+    public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<Item> completedItems, ArrayList<CardClickListener> cardClickListeners) {
         this.itemsList = itemsList;
         this.cardClickListeners = cardClickListeners;
     }

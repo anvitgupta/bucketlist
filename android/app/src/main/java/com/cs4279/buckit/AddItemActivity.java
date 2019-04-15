@@ -75,7 +75,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                 DatabaseReference pushedReference = newItemsReference.push();
                 int cur_timestamp = (int) (System.currentTimeMillis() / 1000L);
-                Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), "03-13-19", false, cur_timestamp, 1.0);
+                Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), "03-13-19", false, cur_timestamp, -1, 1.0);
                 pushedReference.setValue(newItem);
                 String itemKey = pushedReference.getKey();
                 personalBucketListReference.push().setValue(itemKey);
