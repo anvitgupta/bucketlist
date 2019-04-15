@@ -47,7 +47,7 @@ public class MarkAsCompleteActivity extends AppCompatActivity {
                 // Set boolean completed flag in firebase to true
                 itemReference.child("completed").setValue(true);
                 int cur_timestamp = (int) (System.currentTimeMillis() / 1000L);
-                itemReference.child("time_completed").setValue(cur_timestamp);
+                itemReference.child("timeCompleted").setValue(cur_timestamp);
 
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();

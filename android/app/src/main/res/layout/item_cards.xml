@@ -16,6 +16,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/poster"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:gravity="center_vertical"
+            android:textSize="12dp"/>
+
+        <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="20dp"
@@ -58,6 +65,18 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:background="@android:color/holo_blue_bright"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/likeButton"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Like"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@android:color/holo_blue_light"
             android:visibility="gone"/>
 
     </LinearLayout>

@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                             int start_size = itemsList.size();
                             for (int i = 0; i < start_size; ++i) {
                                 if (itemsList.get(i).getTimestamp() < newItem.getTimestamp()) {
-                                    itemsList.set(i, newItem);
+                                    itemsList.add(i, newItem);
                                     break;
                                 }
                             }
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ArrayList<CardClickListener> listeners = new ArrayList<CardClickListener>();
-        for (int i = 0; i < 50; ++i) {
+        for (int i = 0; i < 100; ++i) {
             listeners.add(new ExtendedCardClickListener());
         }
 

@@ -34,6 +34,7 @@ public class PublicFeedActivity extends AppCompatActivity {
     private ArrayList<Item> itemsList;
     private HashSet<String> personalItemIds;
     private ArrayList<Item> completedItems;
+    private ArrayList<Item> mergedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class PublicFeedActivity extends AppCompatActivity {
         cardsLayout = findViewById(R.id.cardsList);
         itemsList = new ArrayList<Item>();
         completedItems = new ArrayList<Item>();
+        mergedList = new ArrayList<Item>();
 
         personalItemIds = (HashSet<String>) getIntent().getSerializableExtra("personalItemIds");
 
@@ -69,6 +71,8 @@ public class PublicFeedActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 itemsList.clear();
+                completedItems.clear();
+                mergedList.clear();
                 for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
                     Item newItem = itemSnapshot.getValue(Item.class);
                     if (personalItemIds.contains(itemSnapshot.getKey())) {
@@ -80,7 +84,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                         int size = completedItems.size();
                         for (int i = 0; i < size; ++i) {
                             if (completedItems.get(i).getTimeCompleted() < newItem.getTimeCompleted()) {
-                                completedItems.set(i, newItem);
+                                completedItems.add(i, newItem);
                                 break;
                             }
                         }
@@ -93,12 +97,26 @@ public class PublicFeedActivity extends AppCompatActivity {
                     int start_size = itemsList.size();
                     for (int i = 0; i < start_size; ++i) {
                         if (itemsList.get(i).getTimestamp() < newItem.getTimestamp()) {
-                            itemsList.set(i, newItem);
+                            itemsList.add(i, newItem);
                             break;
                         }
                     }
                     if (itemsList.size() == start_size) {
                         itemsList.add(newItem);
+                    }
+                }
+
+
+                int i = 0;
+                int j = 0;
+                while (mergedList.size() < itemsList.size() + completedItems.size()) {
+                    if (j == completedItems.size() || (i < itemsList.size() && itemsList.get(i).getTimestamp() > completedItems.get(j).getTimeCompleted())) {
+                        mergedList.add(new Item(itemsList.get(i)));
+                        ++i;
+                    } else {
+                        mergedList.add(new Item(completedItems.get(j)));
+                        mergedList.get(mergedList.size() - 1).markAsActivity();
+                        ++j;
                     }
                 }
 
@@ -130,20 +148,18 @@ public class PublicFeedActivity extends AppCompatActivity {
                     // Get the info from selected card via itemsList and cardID
                     // Cannot use the index of the card in the list in case it changes between getting and setting the CardClickListener
                     String title = "", description = "", original_creator = "", date = "";
-                    int timestamp = -1;
                     for (Item i : itemsList) {
                         if (i.getKey() == cardID) {
                             title = i.getTitle();
                             description = i.getDescription();
                             original_creator = i.getOriginalCreator();
                             date = i.getDate();
-                            timestamp = i.getTimestamp();
                             break;
                         }
                     }
 
                     DatabaseReference pushedReference = initialItemsReference.push();
-                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, timestamp, -1, 1.0);
+                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, (int) (System.currentTimeMillis() / 1000L), -1, 1.0);
                     pushedReference.setValue(newItem);
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);
@@ -159,11 +175,11 @@ public class PublicFeedActivity extends AppCompatActivity {
         }
 
         ArrayList<CardClickListener> listeners = new ArrayList<CardClickListener>();
-        for (int i = 0; i < 50; ++i) {
+        for (int i = 0; i < 100; ++i) {
             listeners.add(new ExtendedCardClickListener());
         }
 
-        mAdapter = new ItemsAdapter(itemsList, completedItems, listeners);
+        mAdapter = new ItemsAdapter(itemsList, mergedList, listeners);
         cardsLayout.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         cardsLayout.setLayoutManager(mLayoutManager);
