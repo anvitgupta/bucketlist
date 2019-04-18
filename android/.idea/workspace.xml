@@ -9,10 +9,10 @@
     <list default="true" id="2b3cb8bd-49e3-4b07-92a8-a366492d38b5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/ItemsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/ItemsAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MarkAsCompleteActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MarkAsCompleteActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/PublicFeedActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/PublicFeedActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_cards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_cards.xml" afterDir="false" />
     </list>
@@ -73,16 +73,16 @@
         <counts>
           <entry key="dummy" value="35" />
           <entry key="gradle" value="111" />
-          <entry key="java" value="16154" />
-          <entry key="xml" value="1203" />
+          <entry key="java" value="17645" />
+          <entry key="xml" value="1210" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="111" />
-          <entry key="JAVA" value="16154" />
+          <entry key="JAVA" value="17645" />
           <entry key="PLAIN_TEXT" value="35" />
-          <entry key="XML" value="1203" />
+          <entry key="XML" value="1210" />
         </counts>
       </usages-collector>
     </session>
@@ -92,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="223" column="30" selection-start-line="223" selection-start-column="30" selection-end-line="223" selection-end-column="30" />
+            <state relative-caret-position="202">
+              <caret line="219" column="86" selection-start-line="219" selection-start-column="86" selection-end-line="219" selection-end-column="86" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -114,8 +114,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/PublicFeedActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="161" column="203" selection-start-line="161" selection-start-column="203" selection-end-line="161" selection-end-column="203" />
+            <state relative-caret-position="353">
+              <caret line="169" lean-forward="true" selection-start-line="169" selection-end-line="169" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -126,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+            <state relative-caret-position="120">
+              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
               <folding>
                 <element signature="e#418#419#0" expanded="true" />
                 <element signature="e#454#455#0" expanded="true" />
@@ -139,12 +139,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/ItemsAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1710">
-              <caret line="114" column="49" selection-start-line="114" selection-start-column="49" selection-end-line="114" selection-end-column="49" />
+            <state relative-caret-position="494">
+              <caret line="89" column="38" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4534#4535#0" expanded="true" />
-                <element signature="e#4574#4575#0" expanded="true" />
+                <element signature="e#5186#5187#0" expanded="true" />
+                <element signature="e#5226#5227#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -154,8 +154,8 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_cards.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="75" column="30" selection-start-line="75" selection-start-column="30" selection-end-line="75" selection-end-column="30" />
+            <state relative-caret-position="122">
+              <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -163,8 +163,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="76" column="78" lean-forward="true" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="78" />
+            <state relative-caret-position="365">
+              <caret line="77" column="61" selection-start-line="77" selection-start-column="61" selection-end-line="77" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -187,10 +187,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1228">
-              <caret line="115" column="25" lean-forward="true" selection-start-line="115" selection-start-column="25" selection-end-line="115" selection-end-column="25" />
+            <state relative-caret-position="1020">
+              <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3506#3507#0" expanded="true" />
+                <element signature="e#3537#3538#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -238,8 +240,13 @@
       <find>setIsIn</find>
       <find>setIs</find>
       <find>set</find>
-      <find>set(</find>
       <find>add_to</find>
+      <find>set(</find>
+      <find>user</find>
+      <find>cardID</find>
+      <find>merged</find>
+      <find>isLike</find>
+      <find>println</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -273,14 +280,14 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_mark_as_complete.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_others_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MarkAsCompleteActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_cards.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/ItemsAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/PublicFeedActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/ItemsAdapter.java" />
       </list>
     </option>
   </component>
@@ -553,18 +560,18 @@
       <window_info id="Designer" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Build Variants" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.2553648" />
+      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.2553648" />
       <window_info id="Captures" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Logcat" order="0" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Debug" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4914163" weight="0.2845304" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" sideWeight="0.4899857" visible="true" weight="0.2845304" />
       <window_info anchor="bottom" id="Version Control" order="4" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.51216024" side_tool="true" visible="true" weight="0.32872927" />
-      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.48569384" weight="0.30110496" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5100143" side_tool="true" visible="true" weight="0.2845304" />
+      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.48497853" weight="0.30110496" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32872927" />
       <window_info anchor="bottom" id="Android Profiler" order="8" sideWeight="0.49928468" weight="0.32872927" />
-      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.48783976" visible="true" weight="0.32872927" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.48640916" weight="0.32872927" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Gradle" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -762,35 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="223" column="30" selection-start-line="223" selection-start-column="30" selection-end-line="223" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_cards.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="75" column="30" selection-start-line="75" selection-start-column="30" selection-end-line="75" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding>
-            <element signature="e#418#419#0" expanded="true" />
-            <element signature="e#454#455#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MarkAsCompleteActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -801,42 +779,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1228">
-          <caret line="115" column="25" lean-forward="true" selection-start-line="115" selection-start-column="25" selection-end-line="115" selection-end-column="25" />
+        <state relative-caret-position="365">
+          <caret line="77" column="61" selection-start-line="77" selection-start-column="61" selection-end-line="77" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="219" column="86" selection-start-line="219" selection-start-column="86" selection-end-line="219" selection-end-column="86" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_cards.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/CardClickListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+          <folding>
+            <element signature="e#418#419#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/Item.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3506#3507#0" expanded="true" />
+            <element signature="e#3537#3538#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/ItemsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="114" column="49" selection-start-line="114" selection-start-column="49" selection-end-line="114" selection-end-column="49" />
+        <state relative-caret-position="494">
+          <caret line="89" column="38" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4534#4535#0" expanded="true" />
-            <element signature="e#4574#4575#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/AddItemActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="76" column="78" lean-forward="true" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#5186#5187#0" expanded="true" />
+            <element signature="e#5226#5227#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cs4279/buckit/PublicFeedActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="161" column="203" selection-start-line="161" selection-start-column="203" selection-end-line="161" selection-end-column="203" />
+        <state relative-caret-position="353">
+          <caret line="169" lean-forward="true" selection-start-line="169" selection-end-line="169" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

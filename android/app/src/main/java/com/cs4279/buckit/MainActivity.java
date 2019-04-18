@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 }
+                // no need for Like button listener since it should never show up here
             }
         }
 

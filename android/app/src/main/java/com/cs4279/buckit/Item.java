@@ -23,6 +23,7 @@ public class Item {
     // Increased by some amount if added by someone else, another amount (lower) if "liked"?
 
     private boolean isInPersonalList;
+    private boolean isLiked;
     private boolean isActivity;
 
     public Item() {
@@ -43,6 +44,7 @@ public class Item {
 
         isInPersonalList = false;
         isActivity = false;
+        isLiked = false;
     }
 
     // Copy constructor
@@ -60,6 +62,7 @@ public class Item {
 
         this.isInPersonalList = i.isInPersonalList;
         this.isActivity = i.isActivity;
+        this.isLiked = i.isLiked;
     }
 
     // @Exclude
@@ -93,8 +96,15 @@ public class Item {
     @Exclude
     public boolean isActivity() { return isActivity; }
 
+    @Exclude
+    public boolean isLiked() { return isLiked; }
+
     public void setIsInPersonalList(boolean isInPersonalList) {
         this.isInPersonalList = isInPersonalList;
+    }
+
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
     }
 
     public void markCompleted() {

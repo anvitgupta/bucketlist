@@ -53,19 +53,28 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         // - replace the contents of the view with that element
         Item item = mergedList.get(position);
 
+        holder.creator.setText("Created by: " + item.getOriginalCreator());
         if (item.isActivity()) {
             holder.poster.setText(item.getPostCreator() + " completed a BuckIt item!");
             holder.title.setText(item.getTitle());
             // TODO: Add the ability to add a photo to these posts
             holder.markAsDoneButton.setVisibility(View.GONE);
             holder.addToBuckItButton.setVisibility(View.GONE);
+
             holder.likeButton.setVisibility(View.VISIBLE);
+            if (item.isLiked()) {
+                holder.likeButton.setAlpha(0.5f);
+                holder.likeButton.setEnabled(false);
+            } else {
+                cardClickListeners.get(2 * position).setCardID(item.getKey());
+                cardClickListeners.get(2 * position).setButtonType(CardClickListener.LIKE);
+                holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position));
+            }
 
             //holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position));
         } else {
             holder.title.setText(item.getTitle());
             holder.description.setText(item.getDescription());
-            holder.creator.setText("Created by: " + item.getOriginalCreator());
             if (item.getCompleted()) {
                 holder.markAsDoneButton.setEnabled(false);
                 holder.markAsDoneButton.setAlpha(0.5f);
@@ -80,13 +89,25 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
             } else {
                 holder.poster.setText(item.getPostCreator() + " added a new BuckIt item!");
                 holder.addToBuckItButton.setVisibility(View.VISIBLE);
+
                 holder.likeButton.setVisibility(View.VISIBLE);
+                if (item.isLiked()) {
+                    holder.likeButton.setAlpha(0.5f);
+                    holder.likeButton.setEnabled(false);
+                } else {
+                    cardClickListeners.get(2 * position + 1).setCardID(item.getKey());
+                    cardClickListeners.get(2 * position + 1).setButtonType(CardClickListener.LIKE);
+                    holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position + 1));
+                }
+
                 holder.markAsDoneButton.setVisibility(View.GONE);
                 cardClickListeners.get(2 * position).setCardID(item.getKey());
                 cardClickListeners.get(2 * position).setButtonType(CardClickListener.ADD_TO_BUCKIT);
                 holder.addToBuckItButton.setOnClickListener(cardClickListeners.get(2 * position));
             }
         }
+
+        holder.score.setText("Score: " + item.getScore());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -101,6 +122,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         protected TextView title;
         protected TextView description;
         protected TextView creator;
+        protected TextView score;
         protected Button addToBuckItButton;
         protected Button markAsDoneButton;
         protected Button likeButton;
@@ -110,6 +132,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
             title = v.findViewById(R.id.title);
             description = v.findViewById(R.id.description);
             creator = v.findViewById(R.id.creator);
+            score = v.findViewById(R.id.score);
             addToBuckItButton = v.findViewById(R.id.addToBuckItButton);
             markAsDoneButton = v.findViewById(R.id.markAsDoneButton);
             likeButton = v.findViewById(R.id.likeButton);

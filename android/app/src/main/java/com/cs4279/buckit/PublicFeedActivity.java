@@ -79,6 +79,10 @@ public class PublicFeedActivity extends AppCompatActivity {
                         newItem.setIsInPersonalList(true);  // set to false by default
                     }
 
+                    if (itemSnapshot.child("liked").child(firebaseAuth.getCurrentUser().getUid()).exists()) {
+                        newItem.setIsLiked(true);
+                    }
+
                     // If item is marked complete, add to completedItems as well sorted by completion time
                     if (newItem.getCompleted()) {
                         int size = completedItems.size();
@@ -164,12 +168,30 @@ public class PublicFeedActivity extends AppCompatActivity {
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);
 
-                    // Hack to re-run onBindViewHolder in mAdapter
+                    /*// Hack to re-run onBindViewHolder in mAdapter
                     Intent i = new Intent(getApplicationContext(), PublicFeedActivity.class);
                     personalItemIds.add(pushedReference.getKey());  // Temporarily add ID to local variable
                     i.putExtra("personalItemIds", personalItemIds);
                     startActivity(i);
-                    finish();
+                    finish();*/
+                    personalItemIds.add(pushedReference.getKey());  // Temporarily add ID to local variable
+                } else if (buttonType == LIKE) {
+                    double score = 0.0;
+                    for (Item i : itemsList) {
+                        if (i.getKey() == cardID) {
+                            score = i.getScore();
+                            break;
+                        }
+                    }
+                    ++score;
+                    initialItemsReference.child(cardID).child("score").setValue(score);
+                    initialItemsReference.child(cardID).child("liked").child(firebaseAuth.getCurrentUser().getUid()).setValue(firebaseAuth.getCurrentUser().getUid());
+
+                    /*// Hack to re-run onBindViewHolder in mAdapter
+                    Intent i = new Intent(getApplicationContext(), PublicFeedActivity.class);
+                    i.putExtra("personalItemIds", personalItemIds);
+                    startActivity(i);
+                    finish();*/
                 }
             }
         }
