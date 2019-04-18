@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by yunhuazhao on 10/30/16.
@@ -20,6 +21,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     private ArrayList<CardClickListener> cardClickListeners;
 
     private ArrayList<Item> mergedList;
+    private HashMap<String, String> uidToUsernameMap;
 
     // Constructor for purely item cards
     public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<CardClickListener> cardClickListeners) {
@@ -29,9 +31,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     }
 
     // Constructor for public feed with item cards and activity cards
-    public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<Item> mergedList, ArrayList<CardClickListener> cardClickListeners) {
+    public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<Item> mergedList, HashMap<String, String> uidToUsernameMap, ArrayList<CardClickListener> cardClickListeners) {
         this.itemsList = itemsList;
         this.mergedList = mergedList;
+        this.uidToUsernameMap = uidToUsernameMap;
         this.cardClickListeners = cardClickListeners;
     }
 
@@ -53,10 +56,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         // - replace the contents of the view with that element
         Item item = mergedList.get(position);
 
-        System.out.println("HELLPPPP" + item.getPostCreator());
         holder.creator.setText("Created by: " + item.getOriginalCreator());
         if (item.isActivity()) {
-            holder.poster.setText(item.getPostCreator() + " completed a BuckIt item!");
+            holder.poster.setVisibility(View.VISIBLE);
+            holder.poster.setText(uidToUsernameMap.get(item.getPostCreator()) + " completed a BuckIt item!");
             holder.title.setText(item.getTitle());
             // TODO: Add the ability to add a photo to these posts
             holder.markAsDoneButton.setVisibility(View.GONE);
@@ -83,6 +86,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
                 holder.markAsDoneButton.setAlpha(0.5f);
             }
             if (item.isInPersonalList()) {
+                holder.poster.setVisibility(View.GONE);
                 holder.markAsDoneButton.setVisibility(View.VISIBLE);
                 holder.addToBuckItButton.setVisibility(View.GONE);
                 holder.likeButton.setVisibility(View.GONE);
@@ -90,7 +94,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
                 cardClickListeners.get(2 * position).setButtonType(CardClickListener.MARK_AS_DONE);
                 holder.markAsDoneButton.setOnClickListener(cardClickListeners.get(2 * position));
             } else {
-                holder.poster.setText(item.getPostCreator() + " added a new BuckIt item!");
+                holder.poster.setVisibility(View.VISIBLE);
+                holder.poster.setText(uidToUsernameMap.get(item.getPostCreator()) + " added a new BuckIt item!");
                 holder.addToBuckItButton.setVisibility(View.VISIBLE);
 
                 holder.likeButton.setVisibility(View.VISIBLE);

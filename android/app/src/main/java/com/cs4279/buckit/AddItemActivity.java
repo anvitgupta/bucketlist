@@ -16,8 +16,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class AddItemActivity extends AppCompatActivity {
 
+    TextInputEditText newItemTitle;
     TextInputEditText newItemText;
     Button submitButton;
     private DatabaseReference mDatabase;
@@ -28,7 +33,8 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        newItemText = (TextInputEditText) findViewById(R.id.newItemField);
+        newItemTitle = findViewById(R.id.newItemTitleField);
+        newItemText = findViewById(R.id.newItemDescriptionField);
         submitButton = findViewById(R.id.submitButton);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -61,22 +67,27 @@ public class AddItemActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newItemStr = newItemText.getText().toString();
+                String newItemTitleStr = newItemTitle.getText().toString();
+                String newItemTextStr = newItemText.getText().toString();
 
-                if(TextUtils.isEmpty(newItemStr)){
+                if(TextUtils.isEmpty(newItemTextStr) || TextUtils.isEmpty(newItemTitleStr)){
                     Toast.makeText(getApplicationContext(),"Please fill in the required fields",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Send to Real-time Database
-                ++count;
-                mDatabase.child("demo").child("" + count).setValue(newItemStr);
-                mDatabase.child("demo_count").setValue("" + count);
+                //++count;
+                //mDatabase.child("demo").child("" + count).setValue(newItemStr);
+                //mDatabase.child("demo_count").setValue("" + count);
 
                 DatabaseReference pushedReference = newItemsReference.push();
                 long cur_timestamp = System.currentTimeMillis() / 1000L;
-                // TODO: need to fix something with usernames
-                Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getUid(), "03-13-19", false, cur_timestamp, -1, 1.0);
+
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = df.format(c);
+
+                Item newItem = new Item(pushedReference.getKey(), newItemTitleStr, newItemTextStr, firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getUid(), formattedDate, false, cur_timestamp, -1, 0.0);
                 pushedReference.setValue(newItem);
                 String itemKey = pushedReference.getKey();
                 personalBucketListReference.push().setValue(itemKey);

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class PublicFeedActivity extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class PublicFeedActivity extends AppCompatActivity {
     private HashSet<String> personalItemIds;
     private ArrayList<Item> completedItems;
     private ArrayList<Item> mergedList;
+    private HashMap<String, String> uidToUsernameMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class PublicFeedActivity extends AppCompatActivity {
         itemsList = new ArrayList<Item>();
         completedItems = new ArrayList<Item>();
         mergedList = new ArrayList<Item>();
+
+        uidToUsernameMap = new HashMap<String, String>();
 
         personalItemIds = (HashSet<String>) getIntent().getSerializableExtra("personalItemIds");
 
@@ -74,7 +78,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                 completedItems.clear();
                 mergedList.clear();
                 for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
-                    Item newItem = itemSnapshot.getValue(Item.class);
+                    final Item newItem = itemSnapshot.getValue(Item.class);
                     if (personalItemIds.contains(itemSnapshot.getKey())) {
                         newItem.setIsInPersonalList(true);  // set to false by default
                     }
@@ -137,6 +141,24 @@ public class PublicFeedActivity extends AppCompatActivity {
         };
         initialItemsReference.addValueEventListener(initialItemsListener);
 
+
+        // Create user ID to username map
+        final DatabaseReference usersReference = mDatabase.getReference("users");
+        usersReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                uidToUsernameMap.clear();
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    uidToUsernameMap.put(userSnapshot.getKey(), (String) userSnapshot.child("username").getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
         final DatabaseReference personalListReference = mDatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).child("personal_list");
 
         class ExtendedCardClickListener extends CardClickListener {
@@ -163,7 +185,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                     }
 
                     DatabaseReference pushedReference = initialItemsReference.push();
-                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, System.currentTimeMillis() / 1000L, -1, 1.0);
+                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, System.currentTimeMillis() / 1000L, -1, 0.0);
                     pushedReference.setValue(newItem);
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);
@@ -209,7 +231,7 @@ public class PublicFeedActivity extends AppCompatActivity {
             listeners.add(new ExtendedCardClickListener());
         }
 
-        mAdapter = new ItemsAdapter(itemsList, mergedList, listeners);
+        mAdapter = new ItemsAdapter(itemsList, mergedList, uidToUsernameMap, listeners);
         cardsLayout.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         cardsLayout.setLayoutManager(mLayoutManager);

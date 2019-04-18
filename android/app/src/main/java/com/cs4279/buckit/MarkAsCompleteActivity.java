@@ -30,7 +30,7 @@ public class MarkAsCompleteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_as_complete);
 
-        newItemText = (TextInputEditText) findViewById(R.id.newItemField);
+        newItemText = (TextInputEditText) findViewById(R.id.completeItemField);
         submitButton = findViewById(R.id.submitButton);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -47,6 +47,7 @@ public class MarkAsCompleteActivity extends AppCompatActivity {
                 // Set boolean completed flag in firebase to true
                 itemReference.child("completed").setValue(true);
                 int cur_timestamp = (int) (System.currentTimeMillis() / 1000L);
+                itemReference.child("timeCompleted").setValue(cur_timestamp);
                 itemReference.child("timeCompleted").setValue(cur_timestamp);
 
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
