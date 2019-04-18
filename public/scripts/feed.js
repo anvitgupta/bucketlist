@@ -14,15 +14,16 @@ firebase.auth().onAuthStateChanged(function(user){
                     var post = document.createElement('div');
                     post.className = "feed_post";
                     var str = "Date:" + childNodes.val().date + "<br/>" + "Title: " + childNodes.val().title + "<br/>" + 
-                    "Description: " + childNodes.val().description + "<br/>" + "Creator: " + childNodes.val().creator;
+                    "Description: " + childNodes.val().description + "<br/>" + "Creator: " + childNodes.val().originalCreator;
                     post.innerHTML = str;
 
                     var btnBuck = document.createElement("BUTTON"); 
                     btnBuck.innerHTML = "Buck It!";
-                    // btnBuck.setAttribute('onclick', 'addToList()');
+                    btnBuck.setAttribute('onclick', 'addToList()');
 
                     var btnComplete = document.createElement("BUTTON");
                     btnComplete.innerHTML = "Complete!"
+                    btnBuck.setAttribute('onclick', 'markComplete()');
 
                     appendPosts.appendChild(btnBuck);
                     appendPosts.appendChild(btnComplete);
@@ -53,5 +54,9 @@ function setValue(id,newvalue) {
 } 
 
 function addToList(){
-    window.location.replace("login.html");
+    window.location.replace("profile.html");
+}
+
+function markComplete(){
+    window.location.replace("profile.html");
 }

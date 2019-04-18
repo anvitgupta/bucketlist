@@ -1,21 +1,24 @@
 var firebase = app_fireBase
 var user = firebase.auth().currentUser;
-var storage = firebase.storage();
 var database = firebase.database();
+var storageRef = firebase.storage();
+var appendPhotos = document.getElementById("photos");
 
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
 
         database.ref().orderByChild('/users/' + user.uid).once('value',snapshot => {
             if(snapshot.exists()){
-                console.log("Exists");
+                console.log("User exists");
             }else{
                 console.log(user.uid);
-                console.log("Does not exists");
+                console.log("User does not exist");
 
                 var postData = {
+                    username: user.displayName.replace(/\s/g, ''),
                     email: user.email,
-                    username: user.displayName.replace(/\s/g, '')
+                    followers: 0,
+                    following: 0
                 }
 
                 var updates = {};
@@ -40,39 +43,50 @@ firebase.auth().onAuthStateChanged(function(user){
         document.getElementById("userFollowers").textContent = '2 Follows'
         document.getElementById("userFollowing").textContent = '2 Following'
         
-        // Get number of posts
-        var numberPosts = 10;
-        var appendPhotos = document.getElementById("photos");
+        var postKeys = [];
 
-        for (var i = 1; i <= numberPosts; i++) {
-            photoId = i + 1;
-            refPath = storage.ref(user.displayName.replace(/\s/g, '') + '/' + i.toString() + '.jpg');
-            (function(pid) {
-                refPath.getDownloadURL().then(function(url) {
-                    
-                    var img = document.createElement('img');
-                    img.src = url;
-                    img.style.width = '150px';
-                    img.style.height = '150px';
-                    img.style.borderRadius = '50%';
-                    img.id = "bucket-img";
-                    img.style.marginTop = '25px';
-                    img.style.marginBottom = '50px';
-                    img.style.marginLeft = '25px';
-                    img.style.marginRight = '25px';
-                    appendPhotos.appendChild(img);
+        database.ref('/users/' + user.uid + '/personal_list').once('value').then(function(snapshot){
+            snapshot.forEach(function(childNodes){
+                    postKeys.push(childNodes.val());
+            })
+        })
 
-                }).catch(function(error) {
-                    console.log(error);
-                });
-            })(photoId);
-        }
-        
+        setTimeout(getPhotos, 2000, postKeys, user);
+
     }else{
         uid=null;
         window.location.replace("login.html");
     }
 }) 
+
+function getPhotos(postKeys, user){
+
+    var appendPhotos = document.getElementById("photos");
+
+    for (i = 0; i < postKeys.length; i++) {
+
+        refPath = storageRef.ref(user.displayName.replace(/\s/g, '') + '/' + postKeys[i] + '.jpg');
+        (function(pid) {
+            refPath.getDownloadURL().then(function(url) {
+                
+                var img = document.createElement('img');
+                img.src = url;
+                img.style.width = '150px';
+                img.style.height = '150px';
+                img.style.borderRadius = '50%';
+                img.id = "bucket-img";
+                img.style.marginTop = '25px';
+                img.style.marginBottom = '50px';
+                img.style.marginLeft = '25px';
+                img.style.marginRight = '25px';
+                appendPhotos.appendChild(img);
+
+            }).catch(function(error) {
+                console.log(error);
+            });
+        })();
+    }
+}
 
 function signOut() {
     firebase.auth().signOut()

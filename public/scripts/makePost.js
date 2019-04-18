@@ -2,11 +2,9 @@ var firebase = app_fireBase
 var user = firebase.auth().currentUser;
 const database = firebase.database();
 var storageRef = firebase.storage().ref();
-var loadImage = new Image();
 
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
-        
         document.getElementById('submit').addEventListener('click', sendData);
     }else{
         
@@ -29,22 +27,16 @@ function sendData() {
 
     var postToBucketList = {
         title: postTitle,
-        creator: userName,
+        originalCreator: userName,
+        postCreator: user.uid,
         date : postDate,
         description: postDescription,
         score: 0,
-        timestamp: Date.now(),
+        liked: null,
+        timestamp: parseInt(Date.now()/1000),
         key: postToBucketListKey,
-        completed: false
-    }
-
-    if(file){
-        var reader  = new FileReader();
-        var imageRef = storageRef.child(userName + '/' + postToBucketListKey.toString() + '.jpg');
-        
-        imageRef.put(file).then(function(snapshot) {
-            console.log('Uploaded a blob or file!');
-          });
+        completed: false,
+        timeCompleted: 0
     }
 
     var updates = {};
@@ -54,11 +46,24 @@ function sendData() {
     firebase.database().ref().update(updates)
     .then(function(){
         console.log('Synchronization succeeded');
-        //window.location.replace("profile.html");
     })
     .catch(function(error) {
         console.log('Synchronization failed');
     });
+
+    if(file){
+        
+        console.log("File is here");
+        var imageRef = storageRef.child(userName + '/' + postToBucketListKey.toString() + '.jpg');
+        
+        imageRef.put(file).then(function(snapshot) {
+            console.log('Uploaded a blob or file!');
+            window.location.replace("profile.html");
+          });
+
+    }else{
+        console.log("File is not here");
+    }
 }
 
 function signOut() {
