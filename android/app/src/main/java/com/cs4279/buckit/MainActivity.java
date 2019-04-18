@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                     // Get the info from selected card via itemsList and cardID
                     // Cannot use the index of the card in the list in case it changes between getting and setting the CardClickListener
                     String title = "", description = "", original_creator = "", date = "";
-                    int timestamp = -1;
+                    long timestamp = -1L;
                     for (Item i : itemsList) {
                         if (i.getKey() == cardID) {
                             title = i.getTitle();

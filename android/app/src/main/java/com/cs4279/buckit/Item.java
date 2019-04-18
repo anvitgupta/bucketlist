@@ -13,12 +13,12 @@ public class Item {
     private String title;  // Title of the item card
     private String description;  // Description of the bucket list item
     private String original_creator;  // The username of the creator of the item, should be the original
-    private String post_creator;  // The username of the creator of this particular item, different from original if "reposted"
+    private String post_creator;  // The user ID of the creator of this particular item, different from original if "reposted"
     // creator, even if a different user adds it to their personal lsit
     private String date;  // The date string of post
     private boolean completed;  // Boolean flag representing whether item has been completed
-    private int timestamp;  // Unix timestamp for creation of item
-    private int timeCompleted;  // Unix timestamp for completion of item, -1 if not complete yet
+    private long timestamp;  // Unix timestamp for creation of item
+    private long timeCompleted;  // Unix timestamp for completion of item, -1 if not complete yet
     private double score; // Something to sort the items by in the activity feed later perhaps?
     // Increased by some amount if added by someone else, another amount (lower) if "liked"?
 
@@ -30,7 +30,7 @@ public class Item {
         // Default constructor required for calls to DataSnapshot.getValue(Item.class)
     }
 
-    public Item(String key, String title, String description, String original_creator, String post_creator, String date, boolean completed, int timestamp, int timeCompleted, double score) {
+    public Item(String key, String title, String description, String original_creator, String post_creator, String date, boolean completed, long timestamp, long timeCompleted, double score) {
         this.key = key;
         this.title = title;
         this.description = description;
@@ -84,9 +84,9 @@ public class Item {
 
     public boolean getCompleted() { return completed; }
 
-    public int getTimestamp() { return timestamp; }
+    public long getTimestamp() { return timestamp; }
 
-    public int getTimeCompleted() { return timeCompleted; }
+    public long getTimeCompleted() { return timeCompleted; }
 
     public double getScore() { return score; }
 

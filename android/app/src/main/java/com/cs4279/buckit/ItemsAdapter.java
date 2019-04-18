@@ -53,6 +53,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         // - replace the contents of the view with that element
         Item item = mergedList.get(position);
 
+        System.out.println("HELLPPPP" + item.getPostCreator());
         holder.creator.setText("Created by: " + item.getOriginalCreator());
         if (item.isActivity()) {
             holder.poster.setText(item.getPostCreator() + " completed a BuckIt item!");
@@ -64,12 +65,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
             holder.likeButton.setVisibility(View.VISIBLE);
             if (item.isLiked()) {
                 holder.likeButton.setAlpha(0.5f);
-                holder.likeButton.setEnabled(false);
+                holder.likeButton.setText("Unlike");
             } else {
-                cardClickListeners.get(2 * position).setCardID(item.getKey());
-                cardClickListeners.get(2 * position).setButtonType(CardClickListener.LIKE);
-                holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position));
+                holder.likeButton.setAlpha(1.0f);
+                holder.likeButton.setText("Like");
             }
+            cardClickListeners.get(2 * position).setCardID(item.getKey());
+            cardClickListeners.get(2 * position).setButtonType(CardClickListener.LIKE);
+            holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position));
 
             //holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position));
         } else {
@@ -93,12 +96,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
                 holder.likeButton.setVisibility(View.VISIBLE);
                 if (item.isLiked()) {
                     holder.likeButton.setAlpha(0.5f);
-                    holder.likeButton.setEnabled(false);
+                    holder.likeButton.setText("Unlike");
                 } else {
-                    cardClickListeners.get(2 * position + 1).setCardID(item.getKey());
-                    cardClickListeners.get(2 * position + 1).setButtonType(CardClickListener.LIKE);
-                    holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position + 1));
+                    holder.likeButton.setAlpha(1.0f);
+                    holder.likeButton.setText("Like");
                 }
+                cardClickListeners.get(2 * position + 1).setCardID(item.getKey());
+                cardClickListeners.get(2 * position + 1).setButtonType(CardClickListener.LIKE);
+                holder.likeButton.setOnClickListener(cardClickListeners.get(2 * position + 1));
 
                 holder.markAsDoneButton.setVisibility(View.GONE);
                 cardClickListeners.get(2 * position).setCardID(item.getKey());

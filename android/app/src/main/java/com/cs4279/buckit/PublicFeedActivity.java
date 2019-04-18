@@ -163,7 +163,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                     }
 
                     DatabaseReference pushedReference = initialItemsReference.push();
-                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, (int) (System.currentTimeMillis() / 1000L), -1, 1.0);
+                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, System.currentTimeMillis() / 1000L, -1, 1.0);
                     pushedReference.setValue(newItem);
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);
@@ -177,15 +177,23 @@ public class PublicFeedActivity extends AppCompatActivity {
                     personalItemIds.add(pushedReference.getKey());  // Temporarily add ID to local variable
                 } else if (buttonType == LIKE) {
                     double score = 0.0;
+                    boolean isLiked = false;
                     for (Item i : itemsList) {
                         if (i.getKey() == cardID) {
                             score = i.getScore();
+                            isLiked = i.isLiked();
                             break;
                         }
                     }
-                    ++score;
+
+                    if (isLiked) {
+                        --score;
+                        initialItemsReference.child(cardID).child("liked").child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+                    } else {
+                        ++score;
+                        initialItemsReference.child(cardID).child("liked").child(firebaseAuth.getCurrentUser().getUid()).setValue(firebaseAuth.getCurrentUser().getUid());
+                    }
                     initialItemsReference.child(cardID).child("score").setValue(score);
-                    initialItemsReference.child(cardID).child("liked").child(firebaseAuth.getCurrentUser().getUid()).setValue(firebaseAuth.getCurrentUser().getUid());
 
                     /*// Hack to re-run onBindViewHolder in mAdapter
                     Intent i = new Intent(getApplicationContext(), PublicFeedActivity.class);

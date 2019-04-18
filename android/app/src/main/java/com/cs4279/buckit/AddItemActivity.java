@@ -35,7 +35,7 @@ public class AddItemActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        // TODO: No need for Metadata on length of list, switch to push() method instead.
+        // This is obsolete and can be deleted: No need for Metadata on length of list, switch to push() method instead.
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -53,7 +53,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         };
         mDatabase.addValueEventListener(postListener);
-        // From the TO-DO to here is probably not needed anymore
+        // From above comment to here is probably not needed anymore
 
 
         final DatabaseReference newItemsReference = mDatabase.child("bucket_list_items");
@@ -74,7 +74,7 @@ public class AddItemActivity extends AppCompatActivity {
                 mDatabase.child("demo_count").setValue("" + count);
 
                 DatabaseReference pushedReference = newItemsReference.push();
-                int cur_timestamp = (int) (System.currentTimeMillis() / 1000L);
+                long cur_timestamp = System.currentTimeMillis() / 1000L;
                 // TODO: need to fix something with usernames
                 Item newItem = new Item(pushedReference.getKey(), newItemStr, newItemStr, firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getUid(), "03-13-19", false, cur_timestamp, -1, 1.0);
                 pushedReference.setValue(newItem);
