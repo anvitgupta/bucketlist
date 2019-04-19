@@ -194,20 +194,20 @@ public class MainActivity extends AppCompatActivity {
                     // Get the info from selected card via itemsList and cardID
                     // Cannot use the index of the card in the list in case it changes between getting and setting the CardClickListener
                     String title = "", description = "", original_creator = "", date = "";
-                    long timestamp = -1L;
+                    boolean hasPhoto = false;
                     for (Item i : itemsList) {
                         if (i.getKey() == cardID) {
                             title = i.getTitle();
                             description = i.getDescription();
                             original_creator = i.getOriginalCreator();
                             date = i.getDate();
-                            timestamp = i.getTimestamp();
+                            hasPhoto = i.getHasPhoto();
                             break;
                         }
                     }
 
                     DatabaseReference pushedReference = newItemsReference.push();
-                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, false, timestamp, -1, 1.0);
+                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, hasPhoto, System.currentTimeMillis() / 1000L, -1, 1.0);
                     pushedReference.setValue(newItem);
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);

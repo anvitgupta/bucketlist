@@ -70,17 +70,22 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         // - replace the contents of the view with that element
         final Item item = mergedList.get(position);
 
-        GlideApp.with(holder.imageView.getContext())
-                .load(storageReference.child("AnvitGupta/" + item.getKey() + ".jpg"))
-                .into(holder.imageView);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ViewImageActivity.class);
-                i.putExtra("key", item.getKey());
-                v.getContext().startActivity(i);
-            }
-        });
+        if (item.getHasPhoto()) {
+            holder.imageView.setVisibility(View.VISIBLE);
+            GlideApp.with(holder.imageView.getContext())
+                    .load(storageReference.child("AnvitGupta/" + item.getKey() + ".jpg"))
+                    .into(holder.imageView);
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), ViewImageActivity.class);
+                    i.putExtra("key", item.getKey());
+                    v.getContext().startActivity(i);
+                }
+            });
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+        }
 
         holder.creator.setText("Created by: " + item.getOriginalCreator());
         if (item.isActivity()) {
