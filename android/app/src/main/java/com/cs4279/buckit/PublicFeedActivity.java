@@ -2,6 +2,7 @@ package com.cs4279.buckit;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +70,7 @@ public class PublicFeedActivity extends AppCompatActivity {
             }
         };
 
+
         mDatabase = FirebaseDatabase.getInstance();
 
         final DatabaseReference initialItemsReference = mDatabase.getReference("bucket_list_items");
@@ -113,7 +117,6 @@ public class PublicFeedActivity extends AppCompatActivity {
                         itemsList.add(newItem);
                     }
                 }
-
 
                 int i = 0;
                 int j = 0;
@@ -185,7 +188,7 @@ public class PublicFeedActivity extends AppCompatActivity {
                     }
 
                     DatabaseReference pushedReference = initialItemsReference.push();
-                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, System.currentTimeMillis() / 1000L, -1, 0.0);
+                    Item newItem = new Item(pushedReference.getKey(), title, description, original_creator, firebaseAuth.getCurrentUser().getUid(), date, false, false, System.currentTimeMillis() / 1000L, -1, 0.0);
                     pushedReference.setValue(newItem);
                     String itemKey = pushedReference.getKey();
                     personalListReference.push().setValue(itemKey);

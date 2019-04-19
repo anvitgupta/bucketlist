@@ -17,6 +17,7 @@ public class Item {
     // creator, even if a different user adds it to their personal lsit
     private String date;  // The date string of post
     private boolean completed;  // Boolean flag representing whether item has been completed
+    private boolean hasPhoto;
     private long timestamp;  // Unix timestamp for creation of item
     private long timeCompleted;  // Unix timestamp for completion of item, -1 if not complete yet
     private double score; // Something to sort the items by in the activity feed later perhaps?
@@ -31,7 +32,7 @@ public class Item {
         // Default constructor required for calls to DataSnapshot.getValue(Item.class)
     }
 
-    public Item(String key, String title, String description, String originalCreator, String postCreator, String date, boolean completed, long timestamp, long timeCompleted, double score) {
+    public Item(String key, String title, String description, String originalCreator, String postCreator, String date, boolean completed, boolean hasPhoto, long timestamp, long timeCompleted, double score) {
         this.key = key;
         this.title = title;
         this.description = description;
@@ -39,6 +40,7 @@ public class Item {
         this.postCreator = postCreator;
         this.date = date;
         this.completed = completed;
+        this.hasPhoto = hasPhoto;
         this.timestamp = timestamp;
         this.timeCompleted = timeCompleted;
         this.score = score;
@@ -57,6 +59,7 @@ public class Item {
         this.postCreator = i.postCreator;
         this.date = i.date;
         this.completed = i.completed;
+        this.hasPhoto = i.hasPhoto;
         this.timestamp = i.timestamp;
         this.timeCompleted = i.timeCompleted;
         this.score = i.score;
@@ -84,6 +87,8 @@ public class Item {
     public String getDate() { return date; }
 
     public boolean getCompleted() { return completed; }
+
+    public boolean getHasPhoto() { return hasPhoto; }
 
     public long getTimestamp() { return timestamp; }
 
@@ -130,6 +135,7 @@ public class Item {
         result.put("postCreator", postCreator);
         result.put("date", date);
         result.put("completed", completed);
+        result.put("hasPhoto", hasPhoto);
         result.put("timestamp", timestamp);
         result.put("timeCompleted", timeCompleted);
         result.put("score", score);

@@ -87,7 +87,7 @@ public class AddItemActivity extends AppCompatActivity {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String formattedDate = df.format(c);
 
-                Item newItem = new Item(pushedReference.getKey(), newItemTitleStr, newItemTextStr, firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getUid(), formattedDate, false, cur_timestamp, -1, 0.0);
+                Item newItem = new Item(pushedReference.getKey(), newItemTitleStr, newItemTextStr, firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getUid(), formattedDate, false, false, cur_timestamp, -1, 0.0);
                 pushedReference.setValue(newItem);
                 String itemKey = pushedReference.getKey();
                 personalBucketListReference.push().setValue(itemKey);

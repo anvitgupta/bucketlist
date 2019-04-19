@@ -42,6 +42,9 @@
         <activity
             android:name=".MarkAsCompleteActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".ViewImageActivity"
+            android:label="Buck It" />
     </application>
 
 </manifest>

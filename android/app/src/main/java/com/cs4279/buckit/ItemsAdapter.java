@@ -1,16 +1,24 @@
 package com.cs4279.buckit;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by yunhuazhao on 10/30/16.
@@ -23,11 +31,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     private ArrayList<Item> mergedList;
     private HashMap<String, String> uidToUsernameMap;
 
+    private StorageReference storageReference;
+
     // Constructor for purely item cards
     public ItemsAdapter(ArrayList<Item> itemsList, ArrayList<CardClickListener> cardClickListeners) {
         this.itemsList = itemsList;
         this.mergedList = itemsList;
         this.cardClickListeners = cardClickListeners;
+
+        this.storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     // Constructor for public feed with item cards and activity cards
@@ -36,6 +48,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         this.mergedList = mergedList;
         this.uidToUsernameMap = uidToUsernameMap;
         this.cardClickListeners = cardClickListeners;
+
+        this.storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,10 +65,22 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ItemsViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemsViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Item item = mergedList.get(position);
+        final Item item = mergedList.get(position);
+
+        GlideApp.with(holder.imageView.getContext())
+                .load(storageReference.child("AnvitGupta/" + item.getKey() + ".jpg"))
+                .into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ViewImageActivity.class);
+                i.putExtra("key", item.getKey());
+                v.getContext().startActivity(i);
+            }
+        });
 
         holder.creator.setText("Created by: " + item.getOriginalCreator());
         if (item.isActivity()) {
@@ -136,6 +162,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         protected Button addToBuckItButton;
         protected Button markAsDoneButton;
         protected Button likeButton;
+        protected ImageView imageView;
         public ItemsViewHolder(View v) { // expects CardView?
             super(v);
             poster = v.findViewById(R.id.poster);
@@ -146,6 +173,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
             addToBuckItButton = v.findViewById(R.id.addToBuckItButton);
             markAsDoneButton = v.findViewById(R.id.markAsDoneButton);
             likeButton = v.findViewById(R.id.likeButton);
+            imageView = v.findViewById(R.id.imageView);
         }
     }
 }
