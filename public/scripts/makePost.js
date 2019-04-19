@@ -25,6 +25,11 @@ function sendData() {
     var postToBucketListKey = firebase.database().ref().child('bucket_list_items').push().key;
     var postToUserKey = firebase.database().ref().child('users/' + user.uid + '/personal_list').push().key;
 
+    var isPhoto = false;
+    if(file){
+        isPhoto = true;
+    }
+
     var postToBucketList = {
         title: postTitle,
         originalCreator: userName,
@@ -36,7 +41,8 @@ function sendData() {
         timestamp: parseInt(Date.now()/1000),
         key: postToBucketListKey,
         completed: false,
-        timeCompleted: 0
+        timeCompleted: 0,
+        hasPhoto: isPhoto
     }
 
     var updates = {};
